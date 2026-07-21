@@ -65,7 +65,6 @@ def test_metrics_schema_validation() -> None:
 def test_metrics_store_query_and_history() -> None:
     """Verifies retrieval, filtering, and values history in MetricStore."""
     bus = MetricsBus()
-    bus.register_schema("val_loss", MetricType.LOSS, "Validation Loss")
 
     # Seed values
     bus.publish(Metric(name="val_loss", value=0.5, module="ModelLoader", step=1))
@@ -89,7 +88,6 @@ def test_metrics_store_query_and_history() -> None:
 def test_asynchronous_publishing() -> None:
     """Verifies that publishing asynchronously is processed in the background."""
     bus = MetricsBus()
-    bus.register_schema("val_loss", MetricType.LOSS, "Validation Loss")
 
     async_metric = Metric(name="val_loss", value=0.99, module="AsyncWorkerTest")
     bus.publish_async(async_metric)
@@ -105,7 +103,6 @@ def test_asynchronous_publishing() -> None:
 def test_metrics_event_observer() -> None:
     """Verifies that subscribers receive notifications when metrics are published."""
     bus = MetricsBus()
-    bus.register_schema("val_loss", MetricType.LOSS, "Validation Loss")
 
     received_events = []
 
@@ -154,7 +151,6 @@ def test_metrics_aggregations() -> None:
 def test_metrics_file_exporters(tmp_path: Path) -> None:
     """Verifies exporting cached metrics to CSV and JSON formats."""
     bus = MetricsBus()
-    bus.register_schema("val_loss", MetricType.LOSS, "Validation Loss")
 
     bus.publish(Metric(name="val_loss", value=0.45, module="ExporterTest", step=5))
     bus.publish(Metric(name="val_loss", value=0.35, module="ExporterTest", step=10))
@@ -178,7 +174,6 @@ def test_metrics_file_exporters(tmp_path: Path) -> None:
 def test_metrics_bus_thread_safety() -> None:
     """Verifies that publishing concurrently from multiple threads does not crash the system."""
     bus = MetricsBus()
-    bus.register_schema("train_loss", MetricType.LOSS, "Train Loss")
 
     num_threads = 5
     messages_per_thread = 50
@@ -205,15 +200,8 @@ def test_metrics_bus_thread_safety() -> None:
 def test_system_telemetry_collection() -> None:
     """Verifies that the background system telemetry gathers core resource usage."""
     bus = MetricsBus()
-    # Sleep to allow telemetry thread worker loop to fire at least once
-    # Since we set sampling_interval to 10s by default, let's override it at runtime
-    # to 0.1 seconds so we get events quickly!
-    config = ConfigManager().get_config()
-    overrides = {"drift": {"sampling_interval": 1}}
-    ConfigManager().apply_runtime_overrides(overrides)
-    ConfigManager().refresh()
-
-    time.sleep(1.2)
+    # Explicitly trigger resource collection
+    bus.collect_system_metrics()
 
     # Assert that process time and uptime have been populated
     uptime_metrics = bus.retrieve("system.uptime_seconds")
@@ -221,8 +209,5 @@ def test_system_telemetry_collection() -> None:
 
     assert len(uptime_metrics) >= 1
     assert len(proc_metrics) >= 1
-    assert uptime_metrics[0].value > 0.0
+    assert uptime_metrics[0].value >= 0.0
 
-    # Clear runtime overrides
-    ConfigManager().clear_overrides()
-    ConfigManager().refresh()

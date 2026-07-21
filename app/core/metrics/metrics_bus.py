@@ -296,96 +296,103 @@ class MetricsBus(MetricPublisher):
         )
         self._telemetry_thread.start()
 
+    def collect_system_metrics(self) -> None:
+        """Manually triggers system resource metrics collection and publishing."""
+        try:
+            # 1. Global CPU/RAM Metrics (if psutil present)
+            if psutil is not None:
+                cpu_perc = psutil.cpu_percent()
+                mem_info = psutil.virtual_memory()
+                disk_info = psutil.disk_usage("/")
+
+                self.publish(
+                    Metric(
+                        name="system.cpu_percent",
+                        value=cpu_perc,
+                        module="SystemCollector",
+                    )
+                )
+                self.publish(
+                    Metric(
+                        name="system.memory_percent",
+                        value=mem_info.percent,
+                        module="SystemCollector",
+                    )
+                )
+                self.publish(
+                    Metric(
+                        name="system.disk_percent",
+                        value=disk_info.percent,
+                        module="SystemCollector",
+                    )
+                )
+
+            # 2. PyTorch GPU Telemetry (if CUDA active)
+            if torch is not None and torch.cuda.is_available():
+                alloc = torch.cuda.memory_allocated() / (1024 * 1024)
+                res = torch.cuda.memory_reserved() / (1024 * 1024)
+                self.publish(
+                    Metric(
+                        name="system.gpu_memory_allocated_mb",
+                        value=alloc,
+                        module="SystemCollector",
+                    )
+                )
+                self.publish(
+                    Metric(
+                        name="system.gpu_memory_reserved_mb",
+                        value=res,
+                        module="SystemCollector",
+                    )
+                )
+
+            # 3. Process time and Uptime
+            process_time = time.process_time()
+            uptime = time.time() - self._start_time
+
+            self.publish(
+                Metric(
+                    name="system.process_time_seconds",
+                    value=process_time,
+                    module="SystemCollector",
+                )
+            )
+            self.publish(
+                Metric(
+                    name="system.uptime_seconds",
+                    value=uptime,
+                    module="SystemCollector",
+                )
+            )
+
+        except Exception as e:
+            logger.warning(f"Failed to collect system metrics: {e}")
+
     def _telemetry_worker(self) -> None:
         """Polls CPU, Memory, Disk, GPU usage, and publishes records to bus."""
         while not self._stop_event.is_set():
+            # Collect metrics immediately on loop start
+            self.collect_system_metrics()
+
+            # Sleep for the configured interval
             try:
                 # Fetch sampling interval from ConfigManager (defaults to 10s if missing)
                 config = ConfigManager(configs_dir=self._configs_dir).get_config()
                 interval = config.drift.sampling_interval  # Using sampling interval as period
                 if interval <= 0:
-                    interval = 10.0
+                    interval = 10
             except Exception:
-                interval = 10.0
+                interval = 10
 
-            # Sleep first or wait for interval (split into small sleeps to terminate fast)
+
+            # Sleep split into small sleeps to terminate fast on shutdown
             sleep_steps = int(interval * 2)
             for _ in range(sleep_steps):
                 if self._stop_event.is_set():
                     return
                 time.sleep(0.5)
 
-            try:
-                # 1. Global CPU/RAM Metrics (if psutil present)
-                if psutil is not None:
-                    cpu_perc = psutil.cpu_percent()
-                    mem_info = psutil.virtual_memory()
-                    disk_info = psutil.disk_usage("/")
 
-                    self.publish(
-                        Metric(
-                            name="system.cpu_percent",
-                            value=cpu_perc,
-                            module="SystemCollector",
-                        )
-                    )
-                    self.publish(
-                        Metric(
-                            name="system.memory_percent",
-                            value=mem_info.percent,
-                            module="SystemCollector",
-                        )
-                    )
-                    self.publish(
-                        Metric(
-                            name="system.disk_percent",
-                            value=disk_info.percent,
-                            module="SystemCollector",
-                        )
-                    )
-
-                # 2. PyTorch GPU Telemetry (if CUDA active)
-                if torch is not None and torch.cuda.is_available():
-                    alloc = torch.cuda.memory_allocated() / (1024 * 1024)
-                    res = torch.cuda.memory_reserved() / (1024 * 1024)
-                    self.publish(
-                        Metric(
-                            name="system.gpu_memory_allocated_mb",
-                            value=alloc,
-                            module="SystemCollector",
-                        )
-                    )
-                    self.publish(
-                        Metric(
-                            name="system.gpu_memory_reserved_mb",
-                            value=res,
-                            module="SystemCollector",
-                        )
-                    )
-
-                # 3. Process time and Uptime
-                process_time = time.process_time()
-                uptime = time.time() - self._start_time
-
-                self.publish(
-                    Metric(
-                        name="system.process_time_seconds",
-                        value=process_time,
-                        module="SystemCollector",
-                    )
-                )
-                self.publish(
-                    Metric(
-                        name="system.uptime_seconds",
-                        value=uptime,
-                        module="SystemCollector",
-                    )
-                )
-
-            except Exception as e:
-                from loguru import logger
-
-                logger.warning(f"Failed to collect background system metrics: {e}")
 
     def shutdown(self) -> None:
         """Stops background threads and blocks until queue is cleared."""

@@ -22,7 +22,7 @@ class InterceptHandler(logging.Handler):
             level = str(record.levelno)
 
         # Find caller from where the logged message originated
-        frame = sys._getframe(6)
+        frame: Any = sys._getframe(6)
         while frame and frame.f_code.co_filename == logging.__file__:
             frame = frame.f_back
 
@@ -52,10 +52,10 @@ def sys_exception_handler(
         sys.__excepthook__(exc_type, exc_value, exc_traceback)
         return
 
-    logger.opt(
-        exception=(exc_type, exc_value, exc_traceback),
-        module_name="System",
+    logger.bind(module_name="System").opt(
+        exception=(exc_type, exc_value, exc_traceback)
     ).critical(f"Unhandled system exception: {exc_value}")
+
 
 
 def register_system_exception_hook() -> None:

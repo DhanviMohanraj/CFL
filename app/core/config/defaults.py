@@ -19,6 +19,8 @@ DEFAULT_SYSTEM_CONFIG: Dict[str, Any] = {
     "metrics_dir": "./metrics",
     "num_workers": 4,
     "debug": False,
+    "deterministic": False,
+    "monitoring_frequency": 10,
 }
 
 DEFAULT_MODEL_CONFIG: Dict[str, Any] = {

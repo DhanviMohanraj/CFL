@@ -57,6 +57,15 @@ class SystemConfig(BaseModel):
         default=False,
         description="If True, overrides epochs/batches to run in validation sandbox."
     )
+    deterministic: bool = Field(
+        default=False,
+        description="If True, configures PyTorch and CUDA backend algorithms to be fully deterministic."
+    )
+    monitoring_frequency: int = Field(
+        default=10,
+        description="Telemetry polling frequency in seconds for system resource monitors."
+    )
+
 
     @field_validator("random_seed")
     @classmethod

@@ -49,7 +49,7 @@ class ConfigManager:
         with self._lock:
             # Double-check lock pattern
             if self._config is not None:
-                return self._config
+                return self._config  # type: ignore[unreachable]
 
             self._config = self._load_and_validate()
             return self._config

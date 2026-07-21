@@ -8,7 +8,7 @@ Future Integration: Invoked by console and file handlers inside DriftAdapt.
 from typing import Any, Dict
 
 
-def log_formatter(record: Dict[str, Any]) -> str:
+def log_formatter(record: Any) -> str:
     """Custom formatter for loguru records.
 
     Produces output matching:

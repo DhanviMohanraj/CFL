@@ -13,4 +13,7 @@ datasets_dir: "./datasets"
 metrics_dir: "./metrics"
 num_workers: 4          # Number of processes to spin for data loading
 debug: false            # Activates verbose checks and small batch modes
+deterministic: false    # Forces PyTorch and CUDA algorithms to use deterministic behaviors
+monitoring_frequency: 10 # Interval (seconds) to log system monitoring checks
+
 
