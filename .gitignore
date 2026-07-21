@@ -28,6 +28,10 @@ checkpoints/*
 logs/*
 !logs/.gitkeep
 
+metrics/*
+!metrics/.gitkeep
+
+
 datasets/raw/*
 !datasets/raw/.gitkeep
 datasets/processed/*

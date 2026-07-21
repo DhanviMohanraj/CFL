@@ -27,6 +27,7 @@ def validate_business_constraints(config: AppConfig) -> None:
         "system.logs_dir": config.system.logs_dir,
         "system.checkpoints_dir": config.system.checkpoints_dir,
         "system.datasets_dir": config.system.datasets_dir,
+        "system.metrics_dir": config.system.metrics_dir,
         "system.experiments_dir": config.system.experiments_dir,
         "evaluation.output_dir": config.evaluation.output_dir,
         "lora.adapters_dir": config.lora.adapters_dir,

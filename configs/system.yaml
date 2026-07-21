@@ -10,5 +10,7 @@ logs_dir: "./logs"
 experiments_dir: "./experiments"
 checkpoints_dir: "./checkpoints"
 datasets_dir: "./datasets"
+metrics_dir: "./metrics"
 num_workers: 4          # Number of processes to spin for data loading
 debug: false            # Activates verbose checks and small batch modes
+

@@ -16,6 +16,7 @@ DEFAULT_SYSTEM_CONFIG: Dict[str, Any] = {
     "experiments_dir": "./experiments",
     "checkpoints_dir": "./checkpoints",
     "datasets_dir": "./datasets",
+    "metrics_dir": "./metrics",
     "num_workers": 4,
     "debug": False,
 }

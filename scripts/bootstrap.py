@@ -11,7 +11,9 @@ from pathlib import Path
 # Define required directories relative to the repository root
 REQUIRED_DIRECTORIES = [
     "logs",
+    "metrics",
     "checkpoints",
+
     "datasets/raw",
     "datasets/processed",
     "datasets/partitions",

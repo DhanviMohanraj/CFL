@@ -44,6 +44,11 @@ class SystemConfig(BaseModel):
         default="./datasets",
         description="Filsystem container for datasets."
     )
+    metrics_dir: str = Field(
+        default="./metrics",
+        description="Filsystem container for metrics files."
+    )
+
     num_workers: int = Field(
         default=4,
         description="Total processes dedicated to loading PyTorch batches."

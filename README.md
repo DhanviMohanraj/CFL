@@ -276,7 +276,73 @@ All configuration sections have corresponding schema models in [schema.py](file:
 
 ---
 
-## 10. Future Integrations
+## 10. Logging and Metrics Subsystems
+
+DriftAdapt establishes a centralized, structured Logging Framework and a thread-safe, pub-sub-based Metrics Bus. All modules must utilize this architecture rather than constructing their own logging instances or managing telemetry files independently.
+
+### Logging Architecture & Lifecycle
+The logging system is based on `loguru` and exposes cached, module-bound contexts using the central `LoggerFactory`:
+
+```mermaid
+sequenceDiagram
+    participant M as Future Module
+    participant LF as LoggerFactory
+    participant LH as Handlers (loguru)
+    
+    M->>LF: get_logger("FederatedServer")
+    Note over LF: Resolves settings, maps intercepts,<br/>caches context
+    LF-->>M: Bound Loguru Logger
+    M->>LF: info("Active clients connected", extra={"startup": True})
+    LF->>LH: Route to application.log & startup.log
+```
+
+- **LoggerFactory.get_logger(name)**: Binds the string name to the logger's `module_name` context extra dictionary.
+- **Log Splitting**: Logs are split based on levels and contextual tags:
+  - `logs/application.log`: Captures all runtime events.
+  - `logs/errors.log`: Captures events with severity >= ERROR.
+  - `logs/startup.log`: Captures bootstrap steps tagged with `extra={"startup": True}`.
+  - `logs/metrics.log`: Captures published metrics tagged with `extra={"metrics_log": True}`.
+- **Traceback Intercept**: Automatically logs unhandled system exceptions (`sys.excepthook`) and redirects standard python logging library modules (e.g. `torch`, `transformers`) to our centralized formatter.
+
+---
+
+### Metrics Bus Architecture & Pipeline
+The `MetricsBus` provides a thread-safe, centralized telemetry collection, observer-based dispatch, and file exporter pipeline:
+
+```
+                  ┌──────────────────────┐
+                  │    Future Module     │
+                  └──────────┬───────────┘
+                             │ publishes
+                             ▼
+                  ┌──────────────────────┐
+                  │      MetricsBus      │
+                  └──────────┬───────────┘
+                             ├──────────────────────────┐
+                             ▼                          ▼
+                  ┌──────────────────────┐   ┌──────────────────────┐
+                  │    MetricRegistry    │   │     MetricStore      │
+                  │ (Validate Category)  │   │  (In-Memory Cache)   │
+                  └──────────────────────┘   └──────────┬───────────┘
+                                                        ├───────────────────┐
+                                                        ▼                   ▼
+                                             ┌──────────────────────┐┌──────────────┐
+                                             │       EventBus       ││  Exporters   │
+                                             │ (Observer Pub/Sub)   ││ (CSV/JSON)   │
+                                             └──────────────────────┘└──────────────┘
+```
+
+- **Metric Object**: A strongly-typed Pydantic model (`Metric`) carrying names, values (numeric, string, boolean, list), timestamps, module origin tags, step/round indices, and optional metadata.
+- **MetricRegistry**: Validates that values align with their metric type definitions. Specifically:
+  - Accuracy metrics are validated to lie inside range `[0.0, 100.0]`.
+  - Loss and resource metrics (CPU/GPU/Memory) are verified to be non-negative.
+- **MetricStore**: A thread-safe, in-memory collection cache supporting complex queries, name filtering, and list history retrievals.
+- **Background Telemetry Thread**: Automatically polls system resource parameters (CPU, Virtual Memory, Disk percentage, process time) and GPU states (CUDA allocated/reserved memory via `torch.cuda` calls) at configurable intervals.
+- **Exporters & Aggregations**: Exporters write metrics to `metrics/` in CSV or JSON. Math operators compute `mean`, `max`, `min`, `median`, `variance`, `stddev`, `latest`, `running_average`, and `grouped` classifications over lists of `Metric` items.
+
+---
+
+## 11. Future Integrations
 
 ### How Future Modules Will Use ConfigManager
 Any future module requiring parameters must load the configuration object:
@@ -291,11 +357,12 @@ learning_rate = config.training.learning_rate
 ```
 
 ### Module 1.3 Logging Framework & Metrics Bus Integration
-- **Logging**: The forthcoming logging framework will import `config.logging` to configure console logging, file logs path (`config.system.logs_dir`), rotation sizes (`config.logging.rotation`), and levels (`config.logging.log_level`).
-- **Metrics Bus**: Telemetry endpoints will retrieve their dispatch frequencies from `config.evaluation.evaluation_frequency` and outputs destination from `config.evaluation.output_dir`.
+- **Logging**: The logging framework imports `config.logging` to configure console logging, file logs path (`config.system.logs_dir`), rotation sizes (`config.logging.rotation`), and levels (`config.logging.log_level`).
+- **Metrics Bus**: Telemetry endpoints retrieve their dispatch frequencies from `config.evaluation.evaluation_frequency` and outputs destination from `config.system.metrics_dir`.
 
 ---
 
-## 11. License
+## 12. License
 
 This repository is licensed under the [MIT License](LICENSE).
+
