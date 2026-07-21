@@ -1,0 +1,14 @@
+# DriftAdapt System Configuration
+# Author: DriftAdapt Contributors
+# Purpose: Global configurations containing workspace and runtime variables.
+
+project_name: "DriftAdapt"
+project_version: "0.1.0"
+random_seed: 42
+device: "cuda"          # Preferred execution device (cuda, cpu, mps)
+logs_dir: "./logs"
+experiments_dir: "./experiments"
+checkpoints_dir: "./checkpoints"
+datasets_dir: "./datasets"
+num_workers: 4          # Number of processes to spin for data loading
+debug: false            # Activates verbose checks and small batch modes

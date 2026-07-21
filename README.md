@@ -225,6 +225,77 @@ The DriftAdapt project is broken down into modular phases:
 
 ---
 
-## 9. License
+## 9. Configuration Management System
+
+DriftAdapt provides a centralized, strongly typed configuration system built using Pydantic V2 and YAML. All modules load parameters from this subsystem to preserve research reproducibility and avoid hardcoding values.
+
+### Loading Flow & Override Precedence
+When initialized, `ConfigManager` loads configuration parameters using the following precedence (highest priority overrides lowest):
+
+1. **Environment Variables**: Variables defined in `.env` or system environment.
+   - Specific overrides: `MODEL_NAME` (base model), `DEVICE` (hardware target), `DEBUG` (verbosity), `LOG_LEVEL` (filter), `OUTPUT_DIR` (results).
+   - Scoped overrides: Variables with prefix `DRIFTADAPT_<SECTION>__<KEY>` (e.g., `DRIFTADAPT_TRAINING__LEARNING_RATE=1e-5`).
+2. **Runtime Programmatic Overrides**: Programmatic overrides passed at runtime via `apply_runtime_overrides()`.
+3. **YAML Configurations**: Files stored under `configs/` (`system.yaml`, `model.yaml`, etc.).
+4. **Sensible Defaults**: Predefined fallbacks exported in `defaults.py`.
+
+```mermaid
+graph TD
+    A[1. Environment Variables] -->|Overrides| B[2. Runtime Overrides]
+    B -->|Overrides| C[3. YAML Configuration Files]
+    C -->|Overrides| D[4. Predefined Default Values]
+    D --> E[Resolved Merged Dictionary]
+    E -->|Validates Schema| F[Pydantic AppConfig Object]
+```
+
+### Validation & Schema Safety
+All configuration sections have corresponding schema models in [schema.py](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/app/core/config/schema.py). 
+1. **Structural Checks**: Pydantic validates types, lists, and dict formats.
+2. **Semantic Bounds**: Validator checks values (e.g. learning rate > 0, participation rate in (0, 1], non-empty model names, valid paths).
+3. **Custom Errors**: The manager intercepts Pydantic errors and wraps them into custom exceptions like `ValidationError` or `ConfigurationError`.
+
+### How to Modify Settings for Experiments
+- **Via YAML**: Modify appropriate fields inside files in `configs/` (e.g., edit `training.yaml` to change learning rate).
+- **Via Environment Variables**: Create a `.env` file in the root directory:
+  ```env
+  MODEL_NAME=meta-llama/Meta-Llama-3-8B-Instruct
+  DEVICE=cuda
+  DRIFTADAPT_TRAINING__LEARNING_RATE=0.0001
+  ```
+- **Via Preset Factories**: Instantiate preset runs in your script using the config factory:
+  ```python
+  from app.core.config import ConfigFactory
+  config = ConfigFactory.create_config("small_experiment")
+  ```
+
+### How to Add New Configuration Files
+1. Create your new YAML file (e.g., `configs/new_feature.yaml`).
+2. Define the schema Pydantic class in `app/core/config/schema.py` and register it as a property of `AppConfig`.
+3. Declare its default template structure in `app/core/config/defaults.py`.
+4. Append its path to `config_mappings` in `app/core/config/loader.py`.
+
+---
+
+## 10. Future Integrations
+
+### How Future Modules Will Use ConfigManager
+Any future module requiring parameters must load the configuration object:
+```python
+from app.core.config import ConfigManager
+
+manager = ConfigManager()
+config = manager.get_config()
+
+# Access strongly-typed fields
+learning_rate = config.training.learning_rate
+```
+
+### Module 1.3 Logging Framework & Metrics Bus Integration
+- **Logging**: The forthcoming logging framework will import `config.logging` to configure console logging, file logs path (`config.system.logs_dir`), rotation sizes (`config.logging.rotation`), and levels (`config.logging.log_level`).
+- **Metrics Bus**: Telemetry endpoints will retrieve their dispatch frequencies from `config.evaluation.evaluation_frequency` and outputs destination from `config.evaluation.output_dir`.
+
+---
+
+## 11. License
 
 This repository is licensed under the [MIT License](LICENSE).

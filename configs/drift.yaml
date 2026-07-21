@@ -1,0 +1,9 @@
+# DriftAdapt Drift Detection Configuration
+# Author: DriftAdapt Contributors
+# Purpose: Parameters detailing distribution drift detection.
+
+drift_detector: "adwin"       # Drift detection algorithm (adwin, kswin, page_hinkley)
+window_size: 200              # Moving window size for stream statistics
+threshold: 0.01               # Warning threshold indicating potential shift
+adaptation_threshold: 0.05    # Drift threshold indicating mandatory retraining
+sampling_interval: 10         # Stream steps to verify before testing statistics

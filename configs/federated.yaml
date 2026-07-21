@@ -1,0 +1,11 @@
+# DriftAdapt Federated Learning Configuration
+# Author: DriftAdapt Contributors
+# Purpose: Parameters governing decentralized aggregation.
+
+num_clients: 10
+participation_rate: 0.8       # Fraction of clients selected per round
+algorithm: "fedavg"           # aggregation algorithm ("fedavg", "fedprox", "fedopt")
+num_rounds: 50
+local_epochs: 3
+client_timeout: 30.0          # Maximum seconds to wait for client updates (seconds)
+communication_frequency: 1    # Frequency of weights sync (in rounds)

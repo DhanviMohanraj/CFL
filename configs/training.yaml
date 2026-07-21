@@ -1,0 +1,13 @@
+# DriftAdapt Local Client Training Configuration
+# Author: DriftAdapt Contributors
+# Purpose: Local client fine-tuning loops and optimization settings.
+
+batch_size: 8
+epochs: 3
+optimizer: "adamw_torch"
+learning_rate: 0.0002
+scheduler: "cosine"
+gradient_accumulation_steps: 4
+mixed_precision: "bf16"       # "fp16", "bf16", "none"
+weight_decay: 0.01
+max_grad_norm: 1.0

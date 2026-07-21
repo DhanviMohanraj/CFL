@@ -1,0 +1,12 @@
+# DriftAdapt Foundation Model Configuration
+# Author: DriftAdapt Contributors
+# Purpose: Configuration of base language model parameters.
+
+foundation_model: "meta-llama/Meta-Llama-3-8B-Instruct"
+tokenizer: "meta-llama/Meta-Llama-3-8B-Instruct"
+max_seq_length: 512
+context_window: 2048
+quantization: "4bit"          # options: "4bit", "8bit", "none"
+precision: "bfloat16"         # options: "float16", "bfloat16", "float32"
+cache_dir: "./checkpoints/hf_cache"
+use_cache: true

@@ -1,0 +1,12 @@
+# DriftAdapt Experiment Sweeps Configuration
+# Author: DriftAdapt Contributors
+# Purpose: Metadata tracking for active research sweeps and trials.
+
+experiment_name: "baseline_personalization"
+tracker: "local"              # options: "wandb", "mlflow", "local"
+tags:
+  - "llama3"
+  - "fedavg"
+  - "adwin"
+  - "low-resource"
+description: "Baseline federated LoRA personalization run with ADWIN drift detector."

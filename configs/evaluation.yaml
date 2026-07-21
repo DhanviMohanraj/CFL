@@ -1,0 +1,16 @@
+# DriftAdapt Evaluation Metrics Configuration
+# Author: DriftAdapt Contributors
+# Purpose: Benchmark validation criteria and telemetry exports.
+
+metrics:
+  - "accuracy"
+  - "f1_score"
+  - "rouge_l"
+  - "bleu"
+  - "latency_ms"
+plots:
+  - "loss_curves"
+  - "drift_alerts"
+  - "confusion_matrix"
+output_dir: "./experiments/results"
+evaluation_frequency: 5       # Run evaluation suite every N communication rounds

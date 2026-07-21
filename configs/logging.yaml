@@ -1,0 +1,9 @@
+# DriftAdapt Logger Configuration
+# Author: DriftAdapt Contributors
+# Purpose: Logging levels, formats, and retention rules.
+
+log_level: "INFO"             # DEBUG, INFO, WARNING, ERROR, CRITICAL
+console_logging: true         # Output logs to standard console
+file_logging: true            # Write logs to workspace file
+rotation: "10 MB"             # Rotate files when they exceed this size
+retention: "1 month"          # Delete rotated logs older than this limit

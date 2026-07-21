@@ -1,0 +1,16 @@
+# DriftAdapt Dataset Ingestion & Partitioning Configuration
+# Author: DriftAdapt Contributors
+# Purpose: Preprocessing, loading, and split specifications.
+
+dataset_name: "MIMIC-IV-Advisory"
+split_ratios:                 # Train, validation, test ratio proportions
+  train: 0.7
+  val: 0.1
+  test: 0.2
+clinic_partitions: 10         # Target partitions for non-IID client split simulation
+season_partitions:            # Simulating seasonal data drift components
+  - "summer"
+  - "rainy"
+  - "winter"
+shuffle: true
+stream_batch_size: 32         # Mini-batch loading size for evaluation streaming

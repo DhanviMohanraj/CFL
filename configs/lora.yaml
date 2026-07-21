@@ -1,0 +1,15 @@
+# DriftAdapt LoRA / PEFT Configuration
+# Author: DriftAdapt Contributors
+# Purpose: Parameters detailing Parameter-Efficient Fine-Tuning.
+
+r: 8                          # Rank of LoRA adapters
+lora_alpha: 16                # Scaling factor alpha
+lora_dropout: 0.05            # Dropout rate inside LoRA layers
+bias: "none"                  # Bias type ("none", "all", "lora_only")
+target_modules:               # Modules to attach adapters to
+  - "q_proj"
+  - "v_proj"
+  - "k_proj"
+  - "o_proj"
+adapters_dir: "./checkpoints/adapters"
+version: "v1.0"               # Current local fine-tuning version tag
