@@ -1,0 +1,57 @@
+# Python Cache and Compiled Files
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE and System Settings
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Project-Specific Ignored Folders (Data, Checkpoints, Logs, and Experiment Artifacts)
+# We ignore the contents of these directories but keep the directory placeholders via .gitkeep
+checkpoints/*
+!checkpoints/.gitkeep
+
+logs/*
+!logs/.gitkeep
+
+datasets/raw/*
+!datasets/raw/.gitkeep
+datasets/processed/*
+!datasets/processed/.gitkeep
+datasets/partitions/*
+!datasets/partitions/.gitkeep
+datasets/synthetic/*
+!datasets/synthetic/.gitkeep
+
+experiments/results/*
+!experiments/results/.gitkeep
+experiments/figures/*
+!experiments/figures/.gitkeep
+experiments/reports/*
+!experiments/reports/.gitkeep
+
+# Model weights
+*.pt
+*.pth
+*.bin
+*.ckpt
+*.safetensors
+*.onnx
+
+# Local Environment Variables
+.env
+.env.local
