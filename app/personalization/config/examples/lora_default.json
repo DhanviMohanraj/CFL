@@ -1,0 +1,85 @@
+{
+    "adapter": {
+        "name": "default_adapter",
+        "version": "1.0",
+        "description": "Default personalization adapter",
+        "author": "DriftAdapt",
+        "organization": "Research",
+        "tags": [
+            "healthcare",
+            "personalization"
+        ]
+    },
+    "lora": {
+        "rank": 16,
+        "alpha": 32.0,
+        "dropout": 0.05,
+        "bias": "none",
+        "task_type": "CAUSAL_LM",
+        "inference_mode": false,
+        "fan_in_fan_out": false,
+        "modules_to_save": [],
+        "init_lora_weights": true
+    },
+    "target_modules": {
+        "modules": [
+            "q_proj",
+            "k_proj",
+            "v_proj",
+            "o_proj",
+            "gate_proj",
+            "up_proj",
+            "down_proj"
+        ]
+    },
+    "precision": {
+        "dtype": "bfloat16",
+        "mixed_precision": true,
+        "gradient_checkpointing": true,
+        "autocast": true
+    },
+    "storage": {
+        "adapter_directory": "./models/adapters",
+        "checkpoint_directory": "./models/checkpoints",
+        "export_directory": "./models/exports",
+        "temporary_directory": "/tmp/driftadapt",
+        "cache_directory": "./models/cache"
+    },
+    "training": {
+        "learning_rate": 0.0002,
+        "batch_size": 4,
+        "epochs": 3,
+        "gradient_accumulation_steps": 4,
+        "optimizer": "adamw_torch",
+        "scheduler": "cosine",
+        "warmup_ratio": 0.03,
+        "weight_decay": 0.001,
+        "gradient_clipping": true,
+        "max_grad_norm": 1.0,
+        "logging_steps": 10,
+        "evaluation_steps": 50
+    },
+    "checkpoint": {
+        "save_every": 100,
+        "keep_last": 3,
+        "save_optimizer": true,
+        "save_scheduler": true,
+        "resume_training": false,
+        "export_format": "safetensors"
+    },
+    "logging": {
+        "verbose": true,
+        "log_parameter_count": true,
+        "log_adapter_creation": true,
+        "log_serialization": true,
+        "log_validation": true
+    },
+    "validation": {
+        "verify_target_modules": true,
+        "verify_parameter_count": true,
+        "verify_adapter_metadata": true,
+        "verify_storage_paths": true,
+        "verify_precision": true,
+        "verify_task_type": true
+    }
+}
