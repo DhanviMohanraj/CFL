@@ -7,7 +7,12 @@ Future Integration: Injected into FastAPI routes via dependency injection in app
 
 import threading
 import time
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from app.services.lora.adapter_registry import AdapterRegistry
+    from app.services.lora.metadata_service import MetadataService
+    from app.services.lora.adapter_initializer import AdapterInitializer
 
 from app.core.config import ConfigManager
 from app.core.device import DeviceManager
@@ -48,6 +53,15 @@ class ServiceContainer:
         self._device_manager: Optional[DeviceManager] = None
         self._runtime_manager: Optional[RuntimeManager] = None
         self._model_manager: Optional[ModelManager] = None
+        
+        # Module 2.3 LoRA API Services
+        from app.services.lora.adapter_registry import AdapterRegistry
+        from app.services.lora.metadata_service import MetadataService
+        from app.services.lora.adapter_initializer import AdapterInitializer
+        
+        self._lora_registry: Optional[AdapterRegistry] = None
+        self._lora_metadata_service: Optional[MetadataService] = None
+        self._lora_adapter_initializer: Optional[AdapterInitializer] = None
 
         self._initialized = True
 
@@ -95,10 +109,34 @@ class ServiceContainer:
         return self._runtime_manager
 
     def model_manager(self) -> ModelManager:
-        """Retrieves ModelManager singleton."""
+        """Returns the ModelManager instance."""
         if self._model_manager is None:
-            self._model_manager = ModelManager(config_manager=self.config_manager())
+            self._model_manager = ModelManager(self.config_manager())
         return self._model_manager
+        
+    def lora_registry(self) -> "AdapterRegistry":
+        """Returns the LoRA AdapterRegistry instance."""
+        if self._lora_registry is None:
+            from app.services.lora.adapter_registry import AdapterRegistry
+            self._lora_registry = AdapterRegistry()
+        return self._lora_registry
+        
+    def lora_metadata_service(self) -> "MetadataService":
+        """Returns the LoRA MetadataService instance."""
+        if self._lora_metadata_service is None:
+            from app.services.lora.metadata_service import MetadataService
+            self._lora_metadata_service = MetadataService(self.lora_registry())
+        return self._lora_metadata_service
+        
+    def lora_adapter_initializer(self) -> "AdapterInitializer":
+        """Returns the LoRA AdapterInitializer instance."""
+        if self._lora_adapter_initializer is None:
+            from app.services.lora.adapter_initializer import AdapterInitializer
+            self._lora_adapter_initializer = AdapterInitializer(
+                model_manager=self.model_manager(),
+                registry=self.lora_registry()
+            )
+        return self._lora_adapter_initializer
 
     @staticmethod
     def logger_factory() -> type[LoggerFactory]:

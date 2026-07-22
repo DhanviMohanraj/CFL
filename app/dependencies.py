@@ -5,6 +5,7 @@ Purpose: Provides FastAPI dependency provider functions for injecting ServiceCon
 Future Integration: Used by all FastAPI route handlers across the platform.
 """
 
+from typing import Any
 from fastapi import Depends
 
 from app.container import ServiceContainer
@@ -43,3 +44,18 @@ def get_runtime_manager(container: ServiceContainer = Depends(get_container)) ->
 def get_model_manager(container: ServiceContainer = Depends(get_container)) -> ModelManager:
     """Dependency providing ModelManager instance."""
     return container.model_manager()
+
+
+def get_lora_registry(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing LoRA AdapterRegistry."""
+    return container.lora_registry()
+
+
+def get_lora_metadata_service(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing LoRA MetadataService."""
+    return container.lora_metadata_service()
+
+
+def get_lora_initializer(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing LoRA AdapterInitializer."""
+    return container.lora_adapter_initializer()
