@@ -1,0 +1,100 @@
+# Condition Ontology for CHW Healthcare Benchmark
+# Defines 16 CHW-relevant condition categories and keyword triggers for mapping
+
+version: "1.0"
+conditions:
+  - id: "vector_malaria"
+    name: "Malaria"
+    category: "Vector-borne"
+    keywords: ["malaria", "plasmodium", "falciparum", "vivax", "chills", "fever spike", "anopheles", "artemisinin"]
+    mesh_terms: ["D008511"]
+
+  - id: "vector_dengue"
+    name: "Dengue Fever"
+    category: "Vector-borne"
+    keywords: ["dengue", "breakbone", "aedes", "thrombocytopenia", "petechiae", "tourniquet test", "ns1"]
+    mesh_terms: ["D003803"]
+
+  - id: "vector_chikungunya"
+    name: "Chikungunya"
+    category: "Vector-borne"
+    keywords: ["chikungunya", "joint pain", "arthralgia", "aedes albopictus", "stooped posture"]
+    mesh_terms: ["D000071243"]
+
+  - id: "respiratory_tb"
+    name: "Tuberculosis"
+    category: "Respiratory"
+    keywords: ["tuberculosis", "tb", "mycobacterium", "hemoptysis", "night sweats", "mantoux", "rifampicin", "dots"]
+    mesh_terms: ["D014376"]
+
+  - id: "respiratory_pneumonia"
+    name: "Pneumonia"
+    category: "Respiratory"
+    keywords: ["pneumonia", "consolidation", "crackles", "streptococcus pneumoniae", "sputum", "bronchial breath"]
+    mesh_terms: ["D011014"]
+
+  - id: "respiratory_ari"
+    name: "Acute Respiratory Infection"
+    category: "Respiratory"
+    keywords: ["bronchitis", "cough", "wheezing", "rhinovirus", "influenza", "upper respiratory", "croup", "stridor"]
+    mesh_terms: ["D012141"]
+
+  - id: "gastro_cholera"
+    name: "Cholera & Severe Diarrhea"
+    category: "Gastrointestinal"
+    keywords: ["cholera", "vibrio", "rice water stool", "dehydration", "ors", "zinc", "diarrhea", "gastroenteritis"]
+    mesh_terms: ["D002771"]
+
+  - id: "gastro_typhoid"
+    name: "Typhoid Fever"
+    category: "Gastrointestinal"
+    keywords: ["typhoid", "salmonella typhi", "enteric fever", "rose spots", "widal", "bradycardia", "ceftriaxone"]
+    mesh_terms: ["D014435"]
+
+  - id: "gastro_amoebiasis"
+    name: "Amoebiasis & Dysentery"
+    category: "Gastrointestinal"
+    keywords: ["amoebiasis", "entamoeba", "dysentery", "bloody stool", "tenesmus", "metronidazole"]
+    mesh_terms: ["D000562"]
+
+  - id: "maternal_anc"
+    name: "Antenatal & Maternal Care"
+    category: "Maternal & Child Health"
+    keywords: ["pregnancy", "antenatal", "preeclampsia", "eclampsia", "folic acid", "trimester", "anemia in pregnancy", "hemoglobin"]
+    mesh_terms: ["D011247"]
+
+  - id: "child_malnutrition"
+    name: "Child Malnutrition & Stunting"
+    category: "Maternal & Child Health"
+    keywords: ["kwashiorkor", "marasmus", "stunting", "wasting", "sam", "mam", "mid-upper arm circumference", "muac", "rutf"]
+    mesh_terms: ["D009751"]
+
+  - id: "child_measles"
+    name: "Measles & Vaccine Preventable"
+    category: "Maternal & Child Health"
+    keywords: ["measles", "koplik spots", "rubella", "pertussis", "dpt vaccine", "vit A deficiency", "maculopapular rash"]
+    mesh_terms: ["D008457"]
+
+  - id: "chronic_hypertension"
+    name: "Hypertension"
+    category: "Chronic / Non-Communicable"
+    keywords: ["hypertension", "high blood pressure", "systolic", "diastolic", "amlodipine", "ace inhibitor", "cardiovascular"]
+    mesh_terms: ["D006973"]
+
+  - id: "chronic_diabetes"
+    name: "Type 2 Diabetes"
+    category: "Chronic / Non-Communicable"
+    keywords: ["diabetes", "hyperglycemia", "hba1c", "metformin", "polyuria", "polydipsia", "fasting blood glucose"]
+    mesh_terms: ["D003924"]
+
+  - id: "skin_scabies"
+    name: "Scabies & Skin Infections"
+    category: "Dermatological"
+    keywords: ["scabies", "sarcoptes", "burrows", "pruritus", "permethrin", "impetigo", "fungal infection", "tinea"]
+    mesh_terms: ["D012532"]
+
+  - id: "eye_trachoma"
+    name: "Trachoma & Conjunctivitis"
+    category: "Ophthalmology / Hygiene"
+    keywords: ["trachoma", "chlamydia trachomatis", "follicular conjunctivitis", "trichiasis", "azithromycin", "eye discharge"]
+    mesh_terms: ["D014143"]

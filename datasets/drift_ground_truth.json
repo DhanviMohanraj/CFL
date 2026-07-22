@@ -1,0 +1,644 @@
+{
+  "clinics": {
+    "clinic_00": {
+      "name": "CHW Subcenter - Rural North (Delta)",
+      "region_id": "region_north_monsoon",
+      "drift_start_month": 4,
+      "max_drift_intensity": 0.8,
+      "monthly_drift_records": {
+        "1": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "2": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "3": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "4": {
+          "item_count": 200,
+          "drifted_item_count": 23,
+          "drift_fraction": 0.115,
+          "drift_intensity": 0.08888888888888889
+        },
+        "5": {
+          "item_count": 200,
+          "drifted_item_count": 37,
+          "drift_fraction": 0.185,
+          "drift_intensity": 0.17777777777777778
+        },
+        "6": {
+          "item_count": 200,
+          "drifted_item_count": 36,
+          "drift_fraction": 0.18,
+          "drift_intensity": 0.26666666666666666
+        },
+        "7": {
+          "item_count": 200,
+          "drifted_item_count": 55,
+          "drift_fraction": 0.275,
+          "drift_intensity": 0.35555555555555557
+        },
+        "8": {
+          "item_count": 200,
+          "drifted_item_count": 65,
+          "drift_fraction": 0.325,
+          "drift_intensity": 0.4444444444444445
+        },
+        "9": {
+          "item_count": 200,
+          "drifted_item_count": 69,
+          "drift_fraction": 0.345,
+          "drift_intensity": 0.5333333333333333
+        },
+        "10": {
+          "item_count": 200,
+          "drifted_item_count": 65,
+          "drift_fraction": 0.325,
+          "drift_intensity": 0.6222222222222222
+        },
+        "11": {
+          "item_count": 200,
+          "drifted_item_count": 61,
+          "drift_fraction": 0.305,
+          "drift_intensity": 0.7111111111111111
+        },
+        "12": {
+          "item_count": 200,
+          "drifted_item_count": 59,
+          "drift_fraction": 0.295,
+          "drift_intensity": 0.8
+        }
+      }
+    },
+    "clinic_01": {
+      "name": "CHW Subcenter - Coastal South",
+      "region_id": "region_south_coastal",
+      "drift_start_month": 6,
+      "max_drift_intensity": 0.7,
+      "monthly_drift_records": {
+        "1": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "2": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "3": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "4": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "5": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "6": {
+          "item_count": 200,
+          "drifted_item_count": 39,
+          "drift_fraction": 0.195,
+          "drift_intensity": 0.09999999999999999
+        },
+        "7": {
+          "item_count": 200,
+          "drifted_item_count": 49,
+          "drift_fraction": 0.245,
+          "drift_intensity": 0.19999999999999998
+        },
+        "8": {
+          "item_count": 200,
+          "drifted_item_count": 59,
+          "drift_fraction": 0.295,
+          "drift_intensity": 0.3
+        },
+        "9": {
+          "item_count": 200,
+          "drifted_item_count": 51,
+          "drift_fraction": 0.255,
+          "drift_intensity": 0.39999999999999997
+        },
+        "10": {
+          "item_count": 200,
+          "drifted_item_count": 67,
+          "drift_fraction": 0.335,
+          "drift_intensity": 0.5
+        },
+        "11": {
+          "item_count": 200,
+          "drifted_item_count": 76,
+          "drift_fraction": 0.38,
+          "drift_intensity": 0.6
+        },
+        "12": {
+          "item_count": 200,
+          "drifted_item_count": 86,
+          "drift_fraction": 0.43,
+          "drift_intensity": 0.7
+        }
+      }
+    },
+    "clinic_02": {
+      "name": "CHW Subcenter - Western Desert",
+      "region_id": "region_western_arid",
+      "drift_start_month": 3,
+      "max_drift_intensity": 0.9,
+      "monthly_drift_records": {
+        "1": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "2": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "3": {
+          "item_count": 200,
+          "drifted_item_count": 23,
+          "drift_fraction": 0.115,
+          "drift_intensity": 0.09000000000000001
+        },
+        "4": {
+          "item_count": 200,
+          "drifted_item_count": 27,
+          "drift_fraction": 0.135,
+          "drift_intensity": 0.18000000000000002
+        },
+        "5": {
+          "item_count": 200,
+          "drifted_item_count": 44,
+          "drift_fraction": 0.22,
+          "drift_intensity": 0.27
+        },
+        "6": {
+          "item_count": 200,
+          "drifted_item_count": 48,
+          "drift_fraction": 0.24,
+          "drift_intensity": 0.36000000000000004
+        },
+        "7": {
+          "item_count": 200,
+          "drifted_item_count": 60,
+          "drift_fraction": 0.3,
+          "drift_intensity": 0.45
+        },
+        "8": {
+          "item_count": 200,
+          "drifted_item_count": 68,
+          "drift_fraction": 0.34,
+          "drift_intensity": 0.54
+        },
+        "9": {
+          "item_count": 200,
+          "drifted_item_count": 65,
+          "drift_fraction": 0.325,
+          "drift_intensity": 0.63
+        },
+        "10": {
+          "item_count": 200,
+          "drifted_item_count": 68,
+          "drift_fraction": 0.34,
+          "drift_intensity": 0.7200000000000001
+        },
+        "11": {
+          "item_count": 200,
+          "drifted_item_count": 65,
+          "drift_fraction": 0.325,
+          "drift_intensity": 0.81
+        },
+        "12": {
+          "item_count": 200,
+          "drifted_item_count": 58,
+          "drift_fraction": 0.29,
+          "drift_intensity": 0.9
+        }
+      }
+    },
+    "clinic_03": {
+      "name": "CHW Subcenter - Eastern Forest",
+      "region_id": "region_eastern_hilly",
+      "drift_start_month": 5,
+      "max_drift_intensity": 0.85,
+      "monthly_drift_records": {
+        "1": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "2": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "3": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "4": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "5": {
+          "item_count": 200,
+          "drifted_item_count": 52,
+          "drift_fraction": 0.26,
+          "drift_intensity": 0.10625
+        },
+        "6": {
+          "item_count": 200,
+          "drifted_item_count": 46,
+          "drift_fraction": 0.23,
+          "drift_intensity": 0.2125
+        },
+        "7": {
+          "item_count": 200,
+          "drifted_item_count": 71,
+          "drift_fraction": 0.355,
+          "drift_intensity": 0.31875
+        },
+        "8": {
+          "item_count": 200,
+          "drifted_item_count": 68,
+          "drift_fraction": 0.34,
+          "drift_intensity": 0.425
+        },
+        "9": {
+          "item_count": 200,
+          "drifted_item_count": 71,
+          "drift_fraction": 0.355,
+          "drift_intensity": 0.53125
+        },
+        "10": {
+          "item_count": 200,
+          "drifted_item_count": 75,
+          "drift_fraction": 0.375,
+          "drift_intensity": 0.6375
+        },
+        "11": {
+          "item_count": 200,
+          "drifted_item_count": 69,
+          "drift_fraction": 0.345,
+          "drift_intensity": 0.74375
+        },
+        "12": {
+          "item_count": 200,
+          "drifted_item_count": 95,
+          "drift_fraction": 0.475,
+          "drift_intensity": 0.85
+        }
+      }
+    },
+    "clinic_04": {
+      "name": "CHW Subcenter - North Peri-Urban",
+      "region_id": "region_north_monsoon",
+      "drift_start_month": 7,
+      "max_drift_intensity": 0.6,
+      "monthly_drift_records": {
+        "1": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "2": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "3": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "4": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "5": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "6": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "7": {
+          "item_count": 200,
+          "drifted_item_count": 35,
+          "drift_fraction": 0.175,
+          "drift_intensity": 0.09999999999999999
+        },
+        "8": {
+          "item_count": 200,
+          "drifted_item_count": 67,
+          "drift_fraction": 0.335,
+          "drift_intensity": 0.19999999999999998
+        },
+        "9": {
+          "item_count": 200,
+          "drifted_item_count": 60,
+          "drift_fraction": 0.3,
+          "drift_intensity": 0.3
+        },
+        "10": {
+          "item_count": 200,
+          "drifted_item_count": 57,
+          "drift_fraction": 0.285,
+          "drift_intensity": 0.39999999999999997
+        },
+        "11": {
+          "item_count": 200,
+          "drifted_item_count": 47,
+          "drift_fraction": 0.235,
+          "drift_intensity": 0.5
+        },
+        "12": {
+          "item_count": 200,
+          "drifted_item_count": 45,
+          "drift_fraction": 0.225,
+          "drift_intensity": 0.6
+        }
+      }
+    },
+    "clinic_05": {
+      "name": "CHW Subcenter - South Inland",
+      "region_id": "region_south_coastal",
+      "drift_start_month": 5,
+      "max_drift_intensity": 0.75,
+      "monthly_drift_records": {
+        "1": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "2": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "3": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "4": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "5": {
+          "item_count": 200,
+          "drifted_item_count": 34,
+          "drift_fraction": 0.17,
+          "drift_intensity": 0.09375
+        },
+        "6": {
+          "item_count": 200,
+          "drifted_item_count": 40,
+          "drift_fraction": 0.2,
+          "drift_intensity": 0.1875
+        },
+        "7": {
+          "item_count": 200,
+          "drifted_item_count": 39,
+          "drift_fraction": 0.195,
+          "drift_intensity": 0.28125
+        },
+        "8": {
+          "item_count": 200,
+          "drifted_item_count": 52,
+          "drift_fraction": 0.26,
+          "drift_intensity": 0.375
+        },
+        "9": {
+          "item_count": 200,
+          "drifted_item_count": 58,
+          "drift_fraction": 0.29,
+          "drift_intensity": 0.46875
+        },
+        "10": {
+          "item_count": 200,
+          "drifted_item_count": 73,
+          "drift_fraction": 0.365,
+          "drift_intensity": 0.5625
+        },
+        "11": {
+          "item_count": 200,
+          "drifted_item_count": 78,
+          "drift_fraction": 0.39,
+          "drift_intensity": 0.65625
+        },
+        "12": {
+          "item_count": 200,
+          "drifted_item_count": 83,
+          "drift_fraction": 0.415,
+          "drift_intensity": 0.75
+        }
+      }
+    },
+    "clinic_06": {
+      "name": "CHW Subcenter - Western Rural",
+      "region_id": "region_western_arid",
+      "drift_start_month": 8,
+      "max_drift_intensity": 0.5,
+      "monthly_drift_records": {
+        "1": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "2": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "3": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "4": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "5": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "6": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "7": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "8": {
+          "item_count": 200,
+          "drifted_item_count": 31,
+          "drift_fraction": 0.155,
+          "drift_intensity": 0.1
+        },
+        "9": {
+          "item_count": 200,
+          "drifted_item_count": 33,
+          "drift_fraction": 0.165,
+          "drift_intensity": 0.2
+        },
+        "10": {
+          "item_count": 200,
+          "drifted_item_count": 28,
+          "drift_fraction": 0.14,
+          "drift_intensity": 0.3
+        },
+        "11": {
+          "item_count": 200,
+          "drifted_item_count": 34,
+          "drift_fraction": 0.17,
+          "drift_intensity": 0.4
+        },
+        "12": {
+          "item_count": 200,
+          "drifted_item_count": 41,
+          "drift_fraction": 0.205,
+          "drift_intensity": 0.5
+        }
+      }
+    },
+    "clinic_07": {
+      "name": "CHW Subcenter - Eastern Hill Tribe",
+      "region_id": "region_eastern_hilly",
+      "drift_start_month": 4,
+      "max_drift_intensity": 0.95,
+      "monthly_drift_records": {
+        "1": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "2": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "3": {
+          "item_count": 200,
+          "drifted_item_count": 0,
+          "drift_fraction": 0.0,
+          "drift_intensity": 0.0
+        },
+        "4": {
+          "item_count": 200,
+          "drifted_item_count": 39,
+          "drift_fraction": 0.195,
+          "drift_intensity": 0.10555555555555554
+        },
+        "5": {
+          "item_count": 200,
+          "drifted_item_count": 38,
+          "drift_fraction": 0.19,
+          "drift_intensity": 0.21111111111111108
+        },
+        "6": {
+          "item_count": 200,
+          "drifted_item_count": 55,
+          "drift_fraction": 0.275,
+          "drift_intensity": 0.31666666666666665
+        },
+        "7": {
+          "item_count": 200,
+          "drifted_item_count": 77,
+          "drift_fraction": 0.385,
+          "drift_intensity": 0.42222222222222217
+        },
+        "8": {
+          "item_count": 200,
+          "drifted_item_count": 73,
+          "drift_fraction": 0.365,
+          "drift_intensity": 0.5277777777777778
+        },
+        "9": {
+          "item_count": 200,
+          "drifted_item_count": 90,
+          "drift_fraction": 0.45,
+          "drift_intensity": 0.6333333333333333
+        },
+        "10": {
+          "item_count": 200,
+          "drifted_item_count": 77,
+          "drift_fraction": 0.385,
+          "drift_intensity": 0.7388888888888888
+        },
+        "11": {
+          "item_count": 200,
+          "drifted_item_count": 83,
+          "drift_fraction": 0.415,
+          "drift_intensity": 0.8444444444444443
+        },
+        "12": {
+          "item_count": 200,
+          "drifted_item_count": 83,
+          "drift_fraction": 0.415,
+          "drift_intensity": 0.95
+        }
+      }
+    }
+  }
+}
