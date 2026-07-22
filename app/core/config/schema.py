@@ -5,7 +5,8 @@ Purpose: Strictly validates typing, ranges, and structures of DriftAdapt configu
 Future Integration: Loaded and validated by loader and config manager modules.
 """
 
-from typing import List, Dict, Literal
+from typing import List, Literal
+
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 

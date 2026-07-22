@@ -7,16 +7,17 @@ Future Integration: Exposes parsing utilities to ConfigManager and ConfigFactory
 
 import os
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
+
 import yaml
 from dotenv import load_dotenv
 
+from app.core.config.defaults import DEFAULT_APP_CONFIG
 from app.core.config.exceptions import (
     ConfigurationError,
     FileNotFoundConfiguration,
     InvalidConfiguration,
 )
-from app.core.config.defaults import DEFAULT_APP_CONFIG
 
 
 def get_project_root() -> Path:

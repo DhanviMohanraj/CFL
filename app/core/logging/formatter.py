@@ -5,7 +5,7 @@ Purpose: Provides structured and human-readable string formats for log messages.
 Future Integration: Invoked by console and file handlers inside DriftAdapt.
 """
 
-from typing import Any, Dict
+from typing import Any
 
 
 def log_formatter(record: Any) -> str:

@@ -6,6 +6,7 @@ Future Integration: Inherited by Tensorboard, Plotly, Dashboard, and MLflow adap
 """
 
 from abc import ABC, abstractmethod
+
 from app.core.metrics.metric_events import MetricEvent
 
 

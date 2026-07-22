@@ -6,7 +6,8 @@ Future Integration: Mounted in app/main.py.
 """
 
 import time
-from typing import Dict, Any
+from typing import Any, Dict
+
 from fastapi import APIRouter, Depends, status
 
 from app.container import ServiceContainer

@@ -6,6 +6,7 @@ Future Integration: Invoked by ModelLoader and ModelValidator.
 """
 
 from typing import Any, Tuple
+
 import torch
 
 from app.core.logging import LoggerFactory

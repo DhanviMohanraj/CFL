@@ -5,7 +5,8 @@ Purpose: Detects CUDA status, names, vendors, compute capability, and memory sta
 Future Integration: Invoked by DeviceManager and GPUMonitor.
 """
 
-from typing import List, Tuple, Any
+from typing import Any, List
+
 from app.core.device.device_info import GPUInfo
 
 torch: Any = None

@@ -5,10 +5,11 @@ Purpose: Verifies the centralized logger formats, rotation sinks, and LoggerFact
 Future Integration: Executed as part of the test suite in CI.
 """
 
-from pathlib import Path
 import time
-from app.core.logging import LoggerFactory
+from pathlib import Path
+
 from app.core.config import ConfigManager
+from app.core.logging import LoggerFactory
 
 
 def test_logger_factory_caching() -> None:

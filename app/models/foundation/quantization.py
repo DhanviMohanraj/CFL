@@ -5,7 +5,8 @@ Purpose: Configures PyTorch floating point dtypes and BitsAndBytes 8-bit / 4-bit
 Future Integration: Invoked by ModelLoader during model loading.
 """
 
-from typing import Dict, Any, Optional, Tuple
+from typing import Any, Optional, Tuple
+
 import torch
 
 from app.core.logging import LoggerFactory
@@ -14,7 +15,7 @@ from app.models.foundation.exceptions import QuantizationError
 logger = LoggerFactory.get_logger("QuantizationManager")
 
 try:
-    import bitsandbytes
+    import bitsandbytes  # noqa: F401
     HAS_BITSANDBYTES = True
 except ImportError:
     HAS_BITSANDBYTES = False

@@ -6,7 +6,8 @@ Future Integration: Invoked by ConfigManager before updating active properties.
 """
 
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any, Dict
+
 from pydantic import ValidationError as PydanticValidationError
 
 from app.core.config.exceptions import ValidationError as CustomValidationError

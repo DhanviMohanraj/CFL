@@ -5,30 +5,29 @@ Purpose: Verifies metrics validation, store queries, thread-safety, math calcula
 Future Integration: Executed as part of the test suite in CI.
 """
 
-import time
 import json
-from pathlib import Path
 import threading
+import time
+from pathlib import Path
+
 import pytest
 
-
 from app.core.metrics import (
-    MetricsBus,
     Metric,
+    MetricPublished,
+    MetricsBus,
     MetricType,
     MetricValidationError,
-    aggregate_mean,
+    aggregate_grouped,
+    aggregate_latest,
     aggregate_max,
-    aggregate_min,
+    aggregate_mean,
     aggregate_median,
+    aggregate_min,
+    aggregate_running_average,
     aggregate_stddev,
     aggregate_variance,
-    aggregate_latest,
-    aggregate_running_average,
-    aggregate_grouped,
-    MetricPublished,
 )
-from app.core.config import ConfigManager
 
 
 @pytest.fixture(autouse=True)

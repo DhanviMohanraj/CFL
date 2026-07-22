@@ -6,7 +6,7 @@ Future Integration: Invoked by ModelManager during initialization and model swit
 """
 
 import time
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Optional, Tuple
 
 from app.core.device import DeviceManager
 from app.core.logging import LoggerFactory

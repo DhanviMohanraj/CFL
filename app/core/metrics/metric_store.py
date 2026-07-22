@@ -5,8 +5,8 @@ Purpose: Manages thread-safe in-memory caching and historical querying of metric
 Future Integration: Invoked by MetricsBus and dashboard publishers to evaluate models.
 """
 
-from typing import List, Dict, Optional, Any
 import threading
+from typing import Any, Dict, List, Optional
 
 from app.core.metrics.metric import Metric
 

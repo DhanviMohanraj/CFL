@@ -5,7 +5,6 @@ Purpose: Intercepts unhandled exceptions and custom DriftAdapt errors, logging s
 Future Integration: Mounted in app/main.py.
 """
 
-from typing import Any, Dict
 from fastapi import Request, Response, status
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint

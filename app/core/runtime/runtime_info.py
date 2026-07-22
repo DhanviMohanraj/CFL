@@ -5,7 +5,8 @@ Purpose: Outlines structured reports detailing OS, hardware specs, packages, and
 Future Integration: Queried by other modules or experiment logging systems.
 """
 
-from typing import Dict, Any, List
+from typing import Any, Dict
+
 from pydantic import BaseModel
 
 

@@ -5,7 +5,6 @@ Purpose: Strictly structures hardware properties (CPU, GPU, RAM) using Pydantic.
 Future Integration: Exported by DeviceManager and SystemMonitor report functions.
 """
 
-from typing import List, Optional
 from pydantic import BaseModel
 
 

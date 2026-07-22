@@ -6,7 +6,7 @@ Future Integration: Mounted in app/main.py.
 """
 
 import uuid
-from typing import Callable
+
 from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 

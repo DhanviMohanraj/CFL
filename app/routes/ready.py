@@ -5,7 +5,8 @@ Purpose: Exposes GET /ready endpoint responding with 200 OK when ready or 503 Se
 Future Integration: Mounted in app/main.py.
 """
 
-from typing import Dict, Any
+from typing import Any, Dict
+
 from fastapi import APIRouter, Depends, Response, status
 
 from app.container import ServiceContainer

@@ -5,11 +5,11 @@ Purpose: Orchestrates hardware utilization polling, manages local history, and c
 Future Integration: Invoked by training loop metrics publishers and platform dashboard engines.
 """
 
-from collections import deque
 import shutil
 import threading
 import time
-from typing import Dict, Any, List, Optional
+from collections import deque
+from typing import Any, Dict, List, Optional
 
 from app.core.config.loader import get_project_root
 from app.core.monitoring.cpu_monitor import CPUMonitor

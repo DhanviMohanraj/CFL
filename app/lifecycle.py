@@ -9,12 +9,13 @@ import gc
 import time
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
-from fastapi import FastAPI
+
 import torch
+from fastapi import FastAPI
 
 from app.container import ServiceContainer
 from app.core.logging import LoggerFactory
-from app.core.metrics import MetricsBus, Metric, MetricType
+from app.core.metrics import Metric, MetricType
 from app.core.runtime import RuntimeInitializer
 
 logger = LoggerFactory.get_logger("ApplicationLifespan")
@@ -43,7 +44,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         logger.info("MetricsBus initialized.")
 
         # 4-7. Runtime, Environment, Device, Seed, and Directory Verification
-        runtime_info = RuntimeInitializer.initialize(config_manager=config_mgr)
+        RuntimeInitializer.initialize(config_manager=config_mgr)
         logger.info("Runtime and Device verification completed successfully.")
 
         # 8-10. Initialize ModelManager, Load Foundation Model, Freeze Parameters

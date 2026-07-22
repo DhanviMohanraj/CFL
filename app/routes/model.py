@@ -5,7 +5,8 @@ Purpose: Exposes GET /model endpoint returning foundation model metadata and mem
 Future Integration: Mounted in app/main.py.
 """
 
-from typing import Dict, Any
+from typing import Any, Dict
+
 from fastapi import APIRouter, Depends, status
 
 from app.dependencies import get_model_manager

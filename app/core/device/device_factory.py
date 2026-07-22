@@ -5,7 +5,6 @@ Purpose: Parses configuration strings and returns torch.device objects.
 Future Integration: Invoked by DeviceManager to create execution devices.
 """
 
-from typing import Optional
 import torch
 
 from app.core.runtime.exceptions import InvalidDeviceError

@@ -5,12 +5,12 @@ Purpose: Validates, catalogs, and stores descriptions and types of registered me
 Future Integration: Invoked by publishers prior to writing to memory or files.
 """
 
-from typing import Dict, Any, Optional
 import threading
+from typing import Any, Dict, Optional
 
+from app.core.metrics.exceptions import MetricAlreadyExists, MetricNotFound, MetricValidationError
 from app.core.metrics.metric import Metric
 from app.core.metrics.metric_types import MetricType
-from app.core.metrics.exceptions import MetricValidationError, MetricAlreadyExists, MetricNotFound
 
 
 class MetricSchema:

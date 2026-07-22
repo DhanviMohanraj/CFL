@@ -5,7 +5,6 @@ Purpose: Defines Pydantic data model representing detailed foundation model meta
 Future Integration: Exported by ModelManager and queried by downstream modules.
 """
 
-from typing import Dict, Any, Optional
 from pydantic import BaseModel, Field
 
 

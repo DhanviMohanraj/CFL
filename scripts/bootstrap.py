@@ -28,7 +28,11 @@ REQUIRED_DIRECTORIES = [
     "configs",
     "tests/unit",
     "tests/integration",
+    "tests/api",
+    "tests/fixtures",
     "tests/system",
+    "coverage",
+    "reports",
     "docs",
     "notebooks",
 ]

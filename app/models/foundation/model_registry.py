@@ -5,9 +5,9 @@ Purpose: Centralizes specifications, context lengths, and default quantization c
 Future Integration: Queried by ModelFactory and ModelLoader when resolving model parameters.
 """
 
-from typing import Dict, Any, Optional
+from typing import Dict
+
 from pydantic import BaseModel, Field
-from app.models.foundation.exceptions import UnsupportedModelError
 
 
 class ModelSpec(BaseModel):

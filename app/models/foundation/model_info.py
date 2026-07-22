@@ -5,7 +5,8 @@ Purpose: Provides structured report object supporting text summaries, dict outpu
 Future Integration: Queried for dashboards, logs, and experiment tracking.
 """
 
-from typing import Dict, Any
+from typing import Any, Dict
+
 from app.models.foundation.model_metadata import ModelMetadata
 
 

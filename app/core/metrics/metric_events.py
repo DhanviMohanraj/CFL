@@ -5,9 +5,8 @@ Purpose: Observer / Pub-Sub pattern for metric updates and experiment lifecycles
 Future Integration: Subscribed to by visualization engines, exporters, and trackers.
 """
 
-from typing import Dict, List, Callable, Type, Any
 import threading
-
+from typing import Any, Callable, Dict, List, Type
 
 from app.core.metrics.metric import Metric
 

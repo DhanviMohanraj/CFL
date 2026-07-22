@@ -8,6 +8,7 @@ Future Integration: Invoked by DeviceManager and CPUMonitor.
 import os
 import platform
 import subprocess
+
 from app.core.device.device_info import CPUInfo
 
 try:

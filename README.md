@@ -471,9 +471,39 @@ DriftAdapt Module 1.6 unifies all underlying core subsystems into a production-g
 
 ---
 
-## 15. License
+## 15. Quality Assurance, Testing Framework & CI Pipeline
+
+DriftAdapt Module 1.7 establishes the testing infrastructure, code quality standards, automated GitHub Actions CI pipeline, and comprehensive technical documentation suite for the complete Foundation Phase (Modules 1.1–1.7).
+
+### Testing Architecture
+- **Global Pytest Fixtures**: [tests/conftest.py](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/tests/conftest.py) provides mock dependency checkers, mock foundation model factories, isolated configuration containers, and FastAPI test clients (`TestClient(app)`).
+- **Test Doublers & Fixtures**: [tests/fixtures/mock_models.py](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/tests/fixtures/mock_models.py) and [tests/fixtures/sample_configs.py](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/tests/fixtures/sample_configs.py) provide reusable PyTorch model doubles and config test data.
+- **Unit Tests**: [tests/unit/](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/tests/unit) covering ConfigManager, LoggerFactory, MetricsBus, DeviceManager, SeedManager, EnvironmentManager, ModelManager, CacheManager, DownloadManager, QuantizationManager, TokenizerLoader, and ModelValidator.
+- **Integration Tests**: [tests/integration/](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/tests/integration) verifying lifespan startup/shutdown sequences and ServiceContainer dependency injections.
+- **API Tests**: [tests/api/](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/tests/api) covering `/health`, `/ready`, `/system`, `/model`, and middlewares (`X-Request-ID`, `X-Response-Time-MS`).
+
+### CI/CD Pipeline
+Automated GitHub Actions workflow ([.github/workflows/ci.yml](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/.github/workflows/ci.yml)) executes multi-stage checks on push/pull request:
+1. Environment directory bootstrapping (`python scripts/bootstrap.py`).
+2. Code style and syntax linting (`flake8`).
+3. Static type validation (`mypy app`).
+4. Unit and Integration test execution (`pytest`).
+5. Coverage analysis and build packaging verification.
+
+### Documentation Suite ([docs/](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/docs))
+- [architecture.md](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/docs/architecture.md): System decomposition, module interactions (1.1–1.6), and data flow diagrams.
+- [developer_guide.md](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/docs/developer_guide.md): Developer onboarding, dependency injection usage, and Module 2 extension rules.
+- [api_reference.md](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/docs/api_reference.md): Complete OpenAPI REST API endpoint specifications.
+- [testing_guide.md](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/docs/testing_guide.md): Test commands, mock fixtures, and coverage expectations.
+- [deployment_guide.md](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/docs/deployment_guide.md): Uvicorn ASGI deployment, readiness probes, and environment variables.
+- [troubleshooting.md](file:///c:/Users/dhanv/OneDrive/Desktop/CFL/CFL/docs/troubleshooting.md): Known issues, CUDA fallback diagnostics, and log inspection procedures.
+
+---
+
+## 16. License
 
 This repository is licensed under the [MIT License](LICENSE).
+
 
 
 

@@ -7,7 +7,8 @@ Future Integration: Invoked byLoggerFactory during initialization step.
 
 import sys
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import List
+
 from loguru import logger
 
 from app.core.logging.formatter import log_formatter

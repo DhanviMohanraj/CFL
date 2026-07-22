@@ -6,13 +6,15 @@ Future Integration: Executed as part of the test suite in CI.
 """
 
 from pathlib import Path
+
 import pytest
+
 from app.core.config import (
-    ConfigManager,
-    ConfigFactory,
     AppConfig,
-    ValidationError,
+    ConfigFactory,
+    ConfigManager,
     ConfigurationError,
+    ValidationError,
     get_project_root,
 )
 

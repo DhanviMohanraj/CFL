@@ -10,19 +10,19 @@ def test_package_imports() -> None:
     """Verifies that all subpackages are importable and contain standard metadata."""
     import app
     import app.api
-    import app.core
-    import app.models
-    import app.services
-    import app.federation
     import app.continual
-    import app.drift
-    import app.replay
+    import app.core
     import app.datasets
+    import app.drift
     import app.evaluation
-    import app.visualization
     import app.experiments
+    import app.federation
     import app.metrics
+    import app.models
+    import app.replay
+    import app.services
     import app.utils
+    import app.visualization
 
     assert app.__version__ == "0.1.0"
     assert app.__doc__ is not None

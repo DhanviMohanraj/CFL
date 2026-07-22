@@ -2,7 +2,7 @@
 
 Author: DriftAdapt Contributors
 Purpose: Verifies the repository boots successfully and acts as the project entrypoint.
-Future Integration: Will coordinate application startup, CLI argument parsing, 
+Future Integration: Will coordinate application startup, CLI argument parsing,
                     and core services execution (Module 1.2+).
 """
 

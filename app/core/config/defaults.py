@@ -5,7 +5,7 @@ Purpose: Exposes standard default dictionary structures for configurations fallb
 Future Integration: Merged by configuration loader if YAML files are partially or fully missing.
 """
 
-from typing import Dict, Any
+from typing import Any, Dict
 
 DEFAULT_SYSTEM_CONFIG: Dict[str, Any] = {
     "project_name": "DriftAdapt",

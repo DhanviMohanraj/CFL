@@ -8,24 +8,23 @@ Future Integration: Communicated with by future LoRA personalization and federat
 import gc
 import threading
 import time
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Optional
+
 import torch
 
 from app.core.config import ConfigManager
 from app.core.device import DeviceManager
 from app.core.logging import LoggerFactory
-from app.core.metrics import MetricsBus, Metric, MetricType
-from app.models.foundation.exceptions import ModelLoadError
+from app.core.metrics import Metric, MetricsBus, MetricType
 from app.models.foundation.interfaces import ModelManagerInterface
 from app.models.foundation.model_factory import ModelFactory
 from app.models.foundation.model_info import ModelInfo
 from app.models.foundation.model_metadata import ModelMetadata
-from app.models.foundation.model_validator import ModelValidator
 from app.models.foundation.model_utils import (
     estimate_memory_footprint_mb,
     run_sanity_inference,
-    verify_frozen_parameters,
 )
+from app.models.foundation.model_validator import ModelValidator
 
 logger = LoggerFactory.get_logger("ModelManager")
 

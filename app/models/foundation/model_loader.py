@@ -6,7 +6,8 @@ Future Integration: Invoked by ModelFactory and ModelManager.
 """
 
 import time
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Optional
+
 import torch
 
 from app.core.device import DeviceManager
@@ -14,7 +15,7 @@ from app.core.logging import LoggerFactory
 from app.models.foundation.download_manager import DownloadManager
 from app.models.foundation.exceptions import ModelLoadError
 from app.models.foundation.interfaces import ModelLoaderInterface
-from app.models.foundation.model_utils import freeze_all_parameters, count_parameters
+from app.models.foundation.model_utils import count_parameters, freeze_all_parameters
 from app.models.foundation.quantization import QuantizationManager
 
 logger = LoggerFactory.get_logger("ModelLoader")

@@ -5,7 +5,6 @@ Purpose: Provides FastAPI dependency provider functions for injecting ServiceCon
 Future Integration: Used by all FastAPI route handlers across the platform.
 """
 
-from typing import Any
 from fastapi import Depends
 
 from app.container import ServiceContainer

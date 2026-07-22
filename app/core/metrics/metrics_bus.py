@@ -5,31 +5,28 @@ Purpose: Central node for publishing, storing, subscribing, exporting, and track
 Future Integration: Inherited and referenced by all client nodes, servers, and model wrappers.
 """
 
-from pathlib import Path
 import queue
-import sys
 import threading
 import time
-from typing import Dict, List, Optional, Any, Type
+from pathlib import Path
+from typing import Any, List, Optional, Type
+
+from loguru import logger
 
 from app.core.config.config_manager import ConfigManager
 from app.core.metrics.metric import Metric
-from app.core.metrics.metric_types import MetricType
-from app.core.metrics.metric_registry import MetricRegistry
-from app.core.metrics.metric_store import MetricStore
 from app.core.metrics.metric_events import (
     EventBus,
+    EventHandler,
+    ExperimentFinished,
+    ExperimentStarted,
     MetricEvent,
     MetricPublished,
-    MetricUpdated,
-    ExperimentStarted,
-    ExperimentFinished,
-    EventHandler,
 )
+from app.core.metrics.metric_registry import MetricRegistry
+from app.core.metrics.metric_store import MetricStore
+from app.core.metrics.metric_types import MetricType
 from app.core.metrics.publishers import MetricPublisher
-from app.core.metrics.exceptions import MetricError, MetricValidationError
-from loguru import logger
-
 
 # Attempt optional imports for system telemetry
 psutil: Any = None

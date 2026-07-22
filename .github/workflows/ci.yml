@@ -1,52 +1,59 @@
-name: CI
+name: DriftAdapt CI Pipeline
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, "feature/**", "release/**" ]
   pull_request:
     branches: [ main, master ]
 
 jobs:
-  lint-and-test:
+  build-and-test:
+    name: Build, Lint & Test Suite
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-        cache: 'pip'
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
 
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements/dev.txt
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 mypy pytest pytest-cov httpx fastapi pydantic torch loguru
+          if [ -f requirements/base.txt ]; then pip install -r requirements/base.txt; fi
+          if [ -f requirements/dev.txt ]; then pip install -r requirements/dev.txt; fi
 
-    - name: Bootstrap Directory Structure
-      run: |
-        python scripts/bootstrap.py
+      - name: Bootstrap Environment Directories
+        run: |
+          python scripts/bootstrap.py
 
-    - name: Format Check (Black)
-      run: |
-        black --check .
+      - name: Code Formatting & Lint Check (flake8)
+        run: |
+          flake8 . --exclude=.venv --count --select=E9,F63,F7,F82 --show-source --statistics
 
-    - name: Import Order Check (isort)
-      run: |
-        isort --check-only .
+      - name: Static Type Checking (mypy)
+        run: |
+          mypy app
 
-    - name: Lint Check (Flake8)
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings.
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=100 --statistics
+      - name: Execute Pytest Suite with Coverage
+        run: |
+          pytest --cov=app --cov-report=term-missing --cov-report=xml:coverage/coverage.xml
 
-    - name: Type Check (Mypy)
-      run: |
-        mypy .
+      - name: Upload Test Coverage Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-py${{ matrix.python-version }}
+          path: coverage/coverage.xml
 
-    - name: Run Test Suite (Pytest)
-      run: |
-        pytest
+      - name: Build Verification
+        run: |
+          python -m pip install build
+          python -m build --wheel

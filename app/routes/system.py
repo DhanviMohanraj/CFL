@@ -5,7 +5,8 @@ Purpose: Exposes GET /system endpoint returning hardware, OS, CPU, GPU, RAM, VRA
 Future Integration: Mounted in app/main.py.
 """
 
-from typing import Dict, Any
+from typing import Any, Dict
+
 from fastapi import APIRouter, Depends, status
 
 from app.core.runtime import RuntimeManager

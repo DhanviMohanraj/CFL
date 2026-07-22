@@ -5,9 +5,10 @@ Purpose: Intercepts standard Python logging library statements and system level 
 Future Integration: Provides cross-library redirection for third-party libraries (e.g. transformers).
 """
 
-import sys
 import logging
-from typing import Any, Tuple, Type
+import sys
+from typing import Any, Type
+
 from loguru import logger
 
 

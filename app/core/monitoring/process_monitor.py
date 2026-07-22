@@ -7,7 +7,7 @@ Future Integration: Invoked by SystemMonitor.
 
 import os
 import time
-from typing import Dict, Any
+from typing import Any, Dict
 
 try:
     import psutil

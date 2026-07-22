@@ -6,8 +6,10 @@ Future Integration: Queried by federated workers, model trainers, and inference 
 """
 
 from __future__ import annotations
+
 import threading
-from typing import Dict, Any, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, Optional
+
 import torch
 
 if TYPE_CHECKING:

@@ -7,7 +7,7 @@ Future Integration: Invoked by ModelLoader before loading model weights.
 
 import os
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Optional
 
 from app.core.logging import LoggerFactory
 from app.models.foundation.cache_manager import CacheManager
@@ -16,7 +16,7 @@ from app.models.foundation.exceptions import DownloadError
 logger = LoggerFactory.get_logger("DownloadManager")
 
 try:
-    from huggingface_hub import snapshot_download, hf_hub_download
+    from huggingface_hub import hf_hub_download, snapshot_download  # noqa: F401
     HAS_HF_HUB = True
 except ImportError:
     HAS_HF_HUB = False

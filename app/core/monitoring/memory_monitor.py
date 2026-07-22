@@ -5,7 +5,8 @@ Purpose: Exposes RAM memory and Swap space allocation polling.
 Future Integration: Invoked by SystemMonitor.
 """
 
-from typing import Dict, Any
+from typing import Any, Dict
+
 from app.core.device.memory_manager import MemoryManager
 
 

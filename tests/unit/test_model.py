@@ -7,30 +7,28 @@ Future Integration: Executed in CI pipeline.
 
 from pathlib import Path
 from unittest.mock import MagicMock, patch
+
 import pytest
 import torch
 
 from app.core.config import ConfigManager
 from app.core.metrics import MetricsBus
 from app.models.foundation import (
+    CacheManager,
+    DownloadError,
+    DownloadManager,
+    ModelInfo,
     ModelManager,
-    ModelFactory,
+    ModelMetadata,
     ModelRegistry,
     ModelSpec,
-    ModelMetadata,
-    ModelInfo,
-    QuantizationManager,
-    CacheManager,
-    DownloadManager,
     ModelValidator,
+    QuantizationError,
+    QuantizationManager,
     count_parameters,
+    estimate_memory_footprint_mb,
     freeze_all_parameters,
     verify_frozen_parameters,
-    estimate_memory_footprint_mb,
-    run_sanity_inference,
-    UnsupportedModelError,
-    QuantizationError,
-    DownloadError,
 )
 
 

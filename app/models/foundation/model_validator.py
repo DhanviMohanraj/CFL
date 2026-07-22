@@ -5,7 +5,8 @@ Purpose: Validates model checkpoint integrity, file completeness, and tokenizer/
 Future Integration: Invoked before and after loading foundation models.
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any, List
+
 import torch
 
 from app.core.logging import LoggerFactory

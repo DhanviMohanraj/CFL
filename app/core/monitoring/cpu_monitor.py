@@ -5,7 +5,8 @@ Purpose: Exposes CPU load and frequencies polling.
 Future Integration: Invoked by SystemMonitor.
 """
 
-from typing import Dict, Any
+from typing import Any, Dict
+
 from app.core.device.cpu_manager import CPUManager
 
 try:

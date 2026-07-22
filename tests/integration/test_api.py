@@ -6,11 +6,11 @@ Future Integration: Executed in CI pipeline.
 """
 
 from unittest.mock import MagicMock, patch
+
 import pytest
 from fastapi.testclient import TestClient
 
 from app.container import ServiceContainer
-from app.core.config import ConfigManager
 from app.main import app
 from app.models.foundation.model_metadata import ModelMetadata
 

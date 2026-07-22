@@ -9,7 +9,7 @@ from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint
 
 from app.core.logging import LoggerFactory
-from app.core.metrics import MetricsBus, Metric, MetricType
+from app.core.metrics import Metric, MetricsBus, MetricType
 
 logger = LoggerFactory.get_logger("RequestLogging")
 

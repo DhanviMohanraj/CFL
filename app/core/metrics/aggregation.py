@@ -6,7 +6,8 @@ Future Integration: Invoked by clients or aggregators to calculate performance m
 """
 
 import statistics
-from typing import List, Dict, Any, Optional
+from typing import Any, Dict, List, Optional
+
 from app.core.metrics.metric import Metric
 
 

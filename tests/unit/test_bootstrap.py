@@ -6,7 +6,8 @@ Future Integration: Executed as part of the test suite in CI.
 """
 
 from pathlib import Path
-from scripts.bootstrap import bootstrap_project, REQUIRED_DIRECTORIES
+
+from scripts.bootstrap import REQUIRED_DIRECTORIES, bootstrap_project
 
 
 def test_bootstrap_directories_created() -> None:
@@ -30,6 +31,6 @@ def test_bootstrap_idempotency() -> None:
     """Verifies that running bootstrap_project multiple times is idempotent and safe."""
     exit_code_1 = bootstrap_project()
     exit_code_2 = bootstrap_project()
-    
+
     assert exit_code_1 == 0
     assert exit_code_2 == 0

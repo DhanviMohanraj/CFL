@@ -6,7 +6,7 @@ Future Integration: Invoked at platform boot by main scripts.
 """
 
 import time
-from typing import Dict, Any, List, Optional
+from typing import Optional
 
 from app.core.config import ConfigManager
 from app.core.logging import LoggerFactory
@@ -34,8 +34,8 @@ class RuntimeInitializer:
         """
         # Defer imports to break circular dependencies
         from app.core.device import DeviceManager
+        from app.core.metrics import Metric, MetricsBus
         from app.core.seed import SeedManager
-        from app.core.metrics import MetricsBus, Metric
 
         start_time = time.time()
         logger.info("DriftAdapt startup sequence initiated.")

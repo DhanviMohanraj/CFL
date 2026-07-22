@@ -5,30 +5,28 @@ Purpose: Verifies environment details, CPU/GPU managers, seed determinism, and R
 Future Integration: Executed as part of the test suite in CI.
 """
 
-import os
 import random
 from pathlib import Path
 from unittest.mock import patch
+
 import numpy as np
 import pytest
 import torch
 
 from app.core.config import ConfigManager
 from app.core.device import (
-    DeviceManager,
-    DeviceFactory,
     CPUManager,
+    DeviceFactory,
+    DeviceManager,
     GPUManager,
     MemoryManager,
 )
 from app.core.metrics import MetricsBus
 from app.core.runtime import (
-    RuntimeManager,
-    EnvironmentManager,
     DependencyChecker,
-    RuntimeInitializer,
+    EnvironmentManager,
     InvalidDeviceError,
-    DependencyMissingError,
+    RuntimeManager,
 )
 from app.core.seed import SeedManager
 

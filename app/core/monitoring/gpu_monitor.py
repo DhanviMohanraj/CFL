@@ -5,7 +5,8 @@ Purpose: Exposes GPU graphics processor memory, load, and availability polling.
 Future Integration: Invoked by SystemMonitor.
 """
 
-from typing import Dict, Any, List
+from typing import Any, Dict, List
+
 from app.core.device.gpu_manager import GPUManager
 
 torch: Any = None
