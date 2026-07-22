@@ -7,10 +7,13 @@ Future Integration: Queried by federated workers, model trainers, and inference 
 
 from __future__ import annotations
 import threading
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, TYPE_CHECKING
 import torch
 
+if TYPE_CHECKING:
+    from app.core.monitoring import SystemMonitor
 
+from app.core.config import ConfigManager
 from app.core.logging import LoggerFactory
 from app.core.runtime.environment import EnvironmentManager
 from app.core.runtime.runtime_info import RuntimeInfo
@@ -50,17 +53,17 @@ class RuntimeManager:
         self._initialized = True
         logger.info("RuntimeManager instance created.")
 
-    def initialize(self) -> RuntimeInfo:
+    def initialize(self, config_manager: Optional[ConfigManager] = None) -> RuntimeInfo:
         """Triggers the startup initialization sequence and caches the results."""
         with self._lock:
-            info = RuntimeInitializer.initialize()
+            info = RuntimeInitializer.initialize(config_manager)
             self._runtime_info = info
             return info
 
-    def get_runtime_info(self) -> RuntimeInfo:
+    def get_runtime_info(self, config_manager: Optional[ConfigManager] = None) -> RuntimeInfo:
         """Returns the cached system RuntimeInfo report, running initialize() if not yet run."""
         if self._runtime_info is None:
-            return self.initialize()
+            return self.initialize(config_manager)
         return self._runtime_info
 
     def get_device(self) -> torch.device:

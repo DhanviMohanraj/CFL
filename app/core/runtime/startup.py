@@ -6,7 +6,7 @@ Future Integration: Invoked at platform boot by main scripts.
 """
 
 import time
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 from app.core.config import ConfigManager
 from app.core.logging import LoggerFactory
@@ -22,7 +22,7 @@ class RuntimeInitializer:
     """Orchestrates system verification, device resolution, seed assignment, and metrics logging on boot."""
 
     @classmethod
-    def initialize(cls) -> RuntimeInfo:
+    def initialize(cls, config_manager: Optional[ConfigManager] = None) -> RuntimeInfo:
         """Runs the entire system startup pipeline.
 
         Returns:
@@ -42,7 +42,7 @@ class RuntimeInitializer:
 
         try:
             # 1. Load configuration
-            config_mgr = ConfigManager()
+            config_mgr = config_manager or ConfigManager()
             config = config_mgr.get_config()
             logger.info("System configuration loaded successfully.")
 
@@ -117,7 +117,7 @@ class RuntimeInitializer:
 
                 bus.register_schema(
                     "runtime.initialization_time_ms",
-                    MetricType.RESOURCE,
+                    MetricType.SYSTEM,
                     "Runtime boot sequence duration in milliseconds.",
                 )
 

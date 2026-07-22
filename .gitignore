@@ -31,6 +31,11 @@ logs/*
 metrics/*
 !metrics/.gitkeep
 
+models/cache/*
+!models/cache/.gitkeep
+models/downloads/*
+!models/downloads/.gitkeep
+
 
 datasets/raw/*
 !datasets/raw/.gitkeep

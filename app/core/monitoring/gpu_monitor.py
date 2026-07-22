@@ -8,10 +8,12 @@ Future Integration: Invoked by SystemMonitor.
 from typing import Dict, Any, List
 from app.core.device.gpu_manager import GPUManager
 
+torch: Any = None
 try:
-    import torch
+    import torch as _torch
+    torch = _torch
 except ImportError:
-    torch = None
+    pass
 
 
 class GPUMonitor:

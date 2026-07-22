@@ -20,7 +20,7 @@ class CPUMonitor:
     @staticmethod
     def get_snapshot() -> Dict[str, Any]:
         """Collects current CPU utilization and performance stats."""
-        cpu_info = CPUManager.get_cpu_info(force_refresh=True)
+        cpu_info = CPUManager.get_cpu_info()
 
         util = CPUManager.get_current_utilization()
 

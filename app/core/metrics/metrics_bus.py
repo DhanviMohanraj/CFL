@@ -32,15 +32,19 @@ from loguru import logger
 
 
 # Attempt optional imports for system telemetry
+psutil: Any = None
 try:
-    import psutil
+    import psutil as _psutil
+    psutil = _psutil
 except ImportError:
-    psutil = None
+    pass
 
+torch: Any = None
 try:
-    import torch
+    import torch as _torch
+    torch = _torch
 except ImportError:
-    torch = None
+    pass
 
 
 class MetricsBus(MetricPublisher):

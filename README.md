@@ -362,7 +362,59 @@ learning_rate = config.training.learning_rate
 
 ---
 
-## 12. License
+## 13. Foundation Model Management Framework
+
+DriftAdapt Module 1.5 provides a centralized, extensible **Foundation Model Management Framework** (`app/models/foundation/`). It manages Hugging Face Causal Language Models, tokenizers, quantization configurations, cache directories, download snapshots, and parameter freezing.
+
+```
+                   ┌────────────────────────────────────────┐
+                   │    Downstream Application / Module     │
+                   └───────────────────┬────────────────────┘
+                                       │ queries
+                                       ▼
+                   ┌────────────────────────────────────────┐
+                   │              ModelManager              │
+                   └───────────────────┬────────────────────┘
+                                       │ delegates
+                                       ▼
+                   ┌────────────────────────────────────────┐
+                   │              ModelFactory              │
+                   └───────┬────────────────────────┬───────┘
+                           │                        │
+                           ▼                        ▼
+           ┌──────────────────────┐   ┌──────────────────────┐
+           │     ModelLoader      │   │   TokenizerLoader    │
+           │ (Freeze Base Params) │   │ (Fast AutoTokenizer) │
+           └───────────┬──────────┘   └───────────┬──────────┘
+                       │                          │
+                       ├──────────────┬───────────┤
+                       ▼              ▼           ▼
+           ┌──────────────────┐ ┌───────────┐ ┌──────────────┐
+           │QuantizationManager│ │CacheManager│ │DeviceManager │
+           │ (FP32/16/BF16/4b)│ │(Cache MB) │ │ (Module 1.4) │
+           └──────────────────┘ └───────────┘ └──────────────┘
+```
+
+### Key Components & Responsibilities
+- **ModelManager**: Thread-safe singleton providing `load_model()`, `unload_model()`, `reload_model()`, `get_model()`, `get_tokenizer()`, `get_metadata()`, `get_memory_usage()`, and `validate_sanity_inference()`.
+- **ModelFactory**: Instantiates paired models and tokenizers using registry specifications.
+- **ModelLoader**: Loads Hugging Face weights, routes device targeting exclusively via `DeviceManager` (Module 1.4), applies quantization, and strictly freezes all base parameters (`requires_grad = False`).
+- **TokenizerLoader**: Loads `AutoTokenizer`, configures pad/eos tokens, and enforces fast Rust tokenization when supported.
+- **ModelRegistry**: Pre-configured registry supporting:
+  - `Qwen/Qwen2.5-3B-Instruct` (Default)
+  - `microsoft/Phi-3-mini-4k-instruct`
+  - `meta-llama/Meta-Llama-3-8B-Instruct`
+  - `TinyLlama/TinyLlama-1.1B-Chat-v1.0`
+  - `mistralai/Mistral-7B-v0.1`
+  - `google/gemma-2b-it`
+  - Dynamic fallback registration for novel Hugging Face repositories.
+- **QuantizationManager**: Manages PyTorch dtypes (`float32`, `float16`, `bfloat16`) and `bitsandbytes` 4-bit (NF4) / 8-bit quantization configurations.
+- **CacheManager & DownloadManager**: Handles local storage inside `models/cache/`, download snapshots via `huggingface_hub`, offline checks (`HF_HUB_OFFLINE`), and cache cleaning.
+
+---
+
+## 14. License
 
 This repository is licensed under the [MIT License](LICENSE).
+
 

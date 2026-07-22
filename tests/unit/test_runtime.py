@@ -158,17 +158,17 @@ def test_device_factory_and_manager() -> None:
 def test_runtime_manager_and_initializer() -> None:
     """Verifies complete bootstrap initialization and runtime reports."""
     # Ensure system configurations are clean
-    config = ConfigManager().get_config()
+    config_mgr = ConfigManager()
     overrides = {"system": {"device": "cpu", "random_seed": 1337}}
-    ConfigManager().apply_runtime_overrides(overrides)
-    ConfigManager().refresh()
+    config_mgr.apply_runtime_overrides(overrides)
+    config_mgr.refresh()
 
     # Execute initialization inside a mock patch for dependencies validation
     with patch("app.core.runtime.dependency_checker.DependencyChecker.verify_dependencies", return_value=(True, [], {})):
         manager = RuntimeManager()
-        info = manager.initialize()
+        info = manager.initialize(config_mgr)
 
-        assert info.project_name == config.system.project_name
+        assert info.project_name == config_mgr.get_config().system.project_name
         assert info.execution["device"] == "cpu"
         assert info.execution["random_seed"] == 1337
 
@@ -184,5 +184,5 @@ def test_runtime_manager_and_initializer() -> None:
         assert "Hardware Overview" in text
 
     # Cleanup overrides
-    ConfigManager().clear_overrides()
-    ConfigManager().refresh()
+    config_mgr.clear_overrides()
+    config_mgr.refresh()

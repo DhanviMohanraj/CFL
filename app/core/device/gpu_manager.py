@@ -5,13 +5,15 @@ Purpose: Detects CUDA status, names, vendors, compute capability, and memory sta
 Future Integration: Invoked by DeviceManager and GPUMonitor.
 """
 
-from typing import List, Tuple
+from typing import List, Tuple, Any
 from app.core.device.device_info import GPUInfo
 
+torch: Any = None
 try:
-    import torch
+    import torch as _torch
+    torch = _torch
 except ImportError:
-    torch = None
+    pass
 
 
 class GPUManager:
@@ -20,23 +22,23 @@ class GPUManager:
     @staticmethod
     def is_cuda_available() -> bool:
         """Returns True if PyTorch detects active CUDA support."""
-        if torch is not None:
-            return bool(torch.cuda.is_available())
-        return False
+        if torch is None:
+            return False
+        return bool(torch.cuda.is_available())
 
     @staticmethod
     def get_cuda_version() -> str:
         """Returns the active CUDA compiler version version tag."""
-        if torch is not None and torch.cuda.is_available():
-            return str(torch.version.cuda or "unknown")
-        return "N/A"
+        if torch is None or not torch.cuda.is_available():
+            return "N/A"
+        return str(torch.version.cuda or "unknown")
 
     @staticmethod
     def get_gpu_count() -> int:
         """Returns total discrete graphics processors detected by PyTorch."""
-        if torch is not None and torch.cuda.is_available():
-            return int(torch.cuda.device_count())
-        return 0
+        if torch is None or not torch.cuda.is_available():
+            return 0
+        return int(torch.cuda.device_count())
 
     @classmethod
     def get_gpus_info(cls) -> List[GPUInfo]:

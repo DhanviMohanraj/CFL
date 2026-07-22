@@ -13,6 +13,9 @@ REQUIRED_DIRECTORIES = [
     "logs",
     "metrics",
     "checkpoints",
+    "models/cache",
+    "models/metadata",
+    "models/downloads",
 
     "datasets/raw",
     "datasets/processed",
