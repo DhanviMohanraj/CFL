@@ -170,6 +170,39 @@ class ServiceContainer:
         self._inference_validator: Optional[InferenceValidator] = None
         self._inference_engine: Optional[InferenceEngine] = None
 
+        # Module 2.8 Validation & Benchmarking Services
+        from app.services.validation.model_integrity_checker import ModelIntegrityChecker
+        from app.services.validation.adapter_validator import AdapterValidator
+        from app.services.validation.inference_validator import InferenceValidator as ValInferenceValidator
+        from app.services.validation.latency_benchmark import LatencyBenchmark
+        from app.services.validation.throughput_benchmark import ThroughputBenchmark
+        from app.services.validation.memory_profiler import MemoryProfiler
+        from app.services.validation.adapter_benchmark import AdapterBenchmark
+        from app.services.validation.system_health_monitor import SystemHealthMonitor
+        from app.services.validation.validation_report_generator import ValidationReportGenerator
+        from app.services.validation.benchmark_report_generator import BenchmarkReportGenerator
+        from app.services.validation.metrics_collector import MetricsCollector as ValMetricsCollector
+        from app.services.validation.validation_history import ValidationHistory
+        from app.services.validation.validation_registry import ValidationRegistry
+        from app.services.validation.benchmark_engine import BenchmarkEngine
+        from app.services.validation.validation_engine import ValidationEngine
+        
+        self._val_model_integrity_checker: Optional[ModelIntegrityChecker] = None
+        self._val_adapter_validator: Optional[AdapterValidator] = None
+        self._val_inference_validator: Optional[ValInferenceValidator] = None
+        self._val_latency_benchmark: Optional[LatencyBenchmark] = None
+        self._val_throughput_benchmark: Optional[ThroughputBenchmark] = None
+        self._val_memory_profiler: Optional[MemoryProfiler] = None
+        self._val_adapter_benchmark: Optional[AdapterBenchmark] = None
+        self._val_system_health_monitor: Optional[SystemHealthMonitor] = None
+        self._val_report_generator: Optional[ValidationReportGenerator] = None
+        self._val_benchmark_report_generator: Optional[BenchmarkReportGenerator] = None
+        self._val_metrics_collector: Optional[ValMetricsCollector] = None
+        self._val_history: Optional[ValidationHistory] = None
+        self._val_registry: Optional[ValidationRegistry] = None
+        self._val_benchmark_engine: Optional[BenchmarkEngine] = None
+        self._val_validation_engine: Optional[ValidationEngine] = None
+
         self._initialized = True
 
     @property
@@ -565,3 +598,110 @@ class ServiceContainer:
                 validator=self.inference_validator()
             )
         return self._inference_engine
+
+    def val_model_integrity_checker(self) -> Any:
+        if self._val_model_integrity_checker is None:
+            from app.services.validation.model_integrity_checker import ModelIntegrityChecker
+            self._val_model_integrity_checker = ModelIntegrityChecker(self.model_manager())
+        return self._val_model_integrity_checker
+        
+    def val_adapter_validator(self) -> Any:
+        if self._val_adapter_validator is None:
+            from app.services.validation.adapter_validator import AdapterValidator
+            self._val_adapter_validator = AdapterValidator(self.inference_adapter_registry())
+        return self._val_adapter_validator
+        
+    def val_inference_validator(self) -> Any:
+        if self._val_inference_validator is None:
+            from app.services.validation.inference_validator import InferenceValidator as ValInferenceValidator
+            self._val_inference_validator = ValInferenceValidator(self.inference_engine())
+        return self._val_inference_validator
+        
+    def val_latency_benchmark(self) -> Any:
+        if self._val_latency_benchmark is None:
+            from app.services.validation.latency_benchmark import LatencyBenchmark
+            self._val_latency_benchmark = LatencyBenchmark(self.inference_engine())
+        return self._val_latency_benchmark
+        
+    def val_throughput_benchmark(self) -> Any:
+        if self._val_throughput_benchmark is None:
+            from app.services.validation.throughput_benchmark import ThroughputBenchmark
+            self._val_throughput_benchmark = ThroughputBenchmark(self.inference_engine())
+        return self._val_throughput_benchmark
+        
+    def val_memory_profiler(self) -> Any:
+        if self._val_memory_profiler is None:
+            from app.services.validation.memory_profiler import MemoryProfiler
+            self._val_memory_profiler = MemoryProfiler()
+        return self._val_memory_profiler
+        
+    def val_adapter_benchmark(self) -> Any:
+        if self._val_adapter_benchmark is None:
+            from app.services.validation.adapter_benchmark import AdapterBenchmark
+            self._val_adapter_benchmark = AdapterBenchmark(self.inference_adapter_loader(), self.inference_adapter_switcher())
+        return self._val_adapter_benchmark
+        
+    def val_system_health_monitor(self) -> Any:
+        if self._val_system_health_monitor is None:
+            from app.services.validation.system_health_monitor import SystemHealthMonitor
+            self._val_system_health_monitor = SystemHealthMonitor(
+                self.val_memory_profiler(), self.model_manager(), self.inference_adapter_registry()
+            )
+        return self._val_system_health_monitor
+        
+    def val_report_generator(self) -> Any:
+        if self._val_report_generator is None:
+            from app.services.validation.validation_report_generator import ValidationReportGenerator
+            self._val_report_generator = ValidationReportGenerator()
+        return self._val_report_generator
+        
+    def val_benchmark_report_generator(self) -> Any:
+        if self._val_benchmark_report_generator is None:
+            from app.services.validation.benchmark_report_generator import BenchmarkReportGenerator
+            self._val_benchmark_report_generator = BenchmarkReportGenerator()
+        return self._val_benchmark_report_generator
+        
+    def val_metrics_collector(self) -> Any:
+        if self._val_metrics_collector is None:
+            from app.services.validation.metrics_collector import MetricsCollector as ValMetricsCollector
+            self._val_metrics_collector = ValMetricsCollector(self.metrics_bus())
+        return self._val_metrics_collector
+        
+    def val_history(self) -> Any:
+        if self._val_history is None:
+            from app.services.validation.validation_history import ValidationHistory
+            self._val_history = ValidationHistory()
+        return self._val_history
+        
+    def val_registry(self) -> Any:
+        if self._val_registry is None:
+            from app.services.validation.validation_registry import ValidationRegistry
+            self._val_registry = ValidationRegistry()
+        return self._val_registry
+        
+    def val_benchmark_engine(self) -> Any:
+        if self._val_benchmark_engine is None:
+            from app.services.validation.benchmark_engine import BenchmarkEngine
+            self._val_benchmark_engine = BenchmarkEngine(
+                self.val_latency_benchmark(),
+                self.val_throughput_benchmark(),
+                self.val_memory_profiler(),
+                self.val_adapter_benchmark(),
+                self.val_metrics_collector(),
+                self.val_history(),
+                self.val_registry()
+            )
+        return self._val_benchmark_engine
+        
+    def val_validation_engine(self) -> Any:
+        if self._val_validation_engine is None:
+            from app.services.validation.validation_engine import ValidationEngine
+            self._val_validation_engine = ValidationEngine(
+                self.val_model_integrity_checker(),
+                self.val_adapter_validator(),
+                self.val_inference_validator(),
+                self.val_metrics_collector(),
+                self.val_history(),
+                self.val_registry()
+            )
+        return self._val_validation_engine

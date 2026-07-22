@@ -136,3 +136,38 @@ def get_inference_history(container: ServiceContainer = Depends(get_container)) 
 def get_inference_metrics(container: ServiceContainer = Depends(get_container)) -> Any:
     """Dependency providing InferenceMetrics."""
     return container.inference_metrics()
+
+
+def get_validation_engine(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing ValidationEngine."""
+    return container.val_validation_engine()
+
+
+def get_benchmark_engine(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing BenchmarkEngine."""
+    return container.val_benchmark_engine()
+
+
+def get_system_health_monitor(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing SystemHealthMonitor."""
+    return container.val_system_health_monitor()
+
+
+def get_validation_history(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing ValidationHistory."""
+    return container.val_history()
+
+
+def get_validation_report_gen(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing ValidationReportGenerator."""
+    return container.val_report_generator()
+
+
+def get_benchmark_report_gen(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing BenchmarkReportGenerator."""
+    return container.val_benchmark_report_generator()
+
+
+def get_model_integrity_checker(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing ModelIntegrityChecker."""
+    return container.val_model_integrity_checker()
