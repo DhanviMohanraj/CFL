@@ -42,12 +42,13 @@ class ModelValidator:
             logger.warning(f"Unable to extract model embedding dimensions for validation: {e}")
             return True
 
-        if vocab_size > 0 and embedding_size > 0:
-            if vocab_size > embedding_size:
-                logger.warning(
-                    f"Tokenizer vocabulary size ({vocab_size}) exceeds model embedding size ({embedding_size}). "
-                    "Resizing token embeddings might be required during fine-tuning."
-                )
+        if isinstance(vocab_size, int) and isinstance(embedding_size, int):
+            if vocab_size > 0 and embedding_size > 0:
+                if vocab_size > embedding_size:
+                    logger.warning(
+                        f"Tokenizer vocabulary size ({vocab_size}) exceeds model embedding size ({embedding_size}). "
+                        "Resizing token embeddings might be required during fine-tuning."
+                    )
 
         logger.info(f"Tokenizer/Model compatibility verified (tokenizer vocab: {vocab_size}, model embeddings: {embedding_size}).")
         return True

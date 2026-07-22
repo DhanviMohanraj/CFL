@@ -229,10 +229,22 @@ class MetricsBus(MetricPublisher):
         for m in metrics:
             self.publish(m)
 
+    def _start_async_worker(self) -> None:
+        """Ensures the async queue worker thread is active."""
+        with self._lock:
+            if self._stop_event.is_set():
+                self._stop_event.clear()
+            if self._async_thread is None or not self._async_thread.is_alive():
+                self._async_thread = threading.Thread(
+                    target=self._async_worker, daemon=True, name="MetricsBusAsyncWorker"
+                )
+                self._async_thread.start()
+
     def publish_async(self, metric: Metric) -> None:
         """Pushes a metric onto the async processing queue."""
         if not metric.experiment_id and self._active_experiment:
             metric.experiment_id = self._active_experiment
+        self._start_async_worker()
         self._async_queue.put(metric)
 
     def _async_worker(self) -> None:

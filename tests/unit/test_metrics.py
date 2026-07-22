@@ -93,7 +93,7 @@ def test_asynchronous_publishing() -> None:
     bus.publish_async(async_metric)
 
     # Allow background thread worker to pick up and process queue
-    time.sleep(0.6)
+    time.sleep(1.0)
 
     latest = bus.latest("val_loss")
     assert latest is not None

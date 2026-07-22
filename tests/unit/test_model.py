@@ -228,6 +228,9 @@ def test_model_manager_with_mocked_factory() -> None:
         is_frozen=True,
     )
 
+    # Ensure clean starting state for ModelManager singleton
+    ModelManager().unload_model()
+
     # Patch ModelFactory inside ModelManager
     with patch("app.models.foundation.model_manager.ModelFactory") as MockFactoryCls:
         mock_factory_instance = MockFactoryCls.return_value
@@ -250,6 +253,7 @@ def test_model_manager_with_mocked_factory() -> None:
         config_mgr.refresh()
 
         mgr = ModelManager(config_manager=config_mgr)
+        mgr._factory = mock_factory_instance
         info = mgr.load_model()
 
         assert info.metadata.model_name == "Qwen/Qwen2.5-3B-Instruct"

@@ -413,8 +413,67 @@ DriftAdapt Module 1.5 provides a centralized, extensible **Foundation Model Mana
 
 ---
 
-## 14. License
+## 14. FastAPI Backend Infrastructure & Application Lifecycle
+
+DriftAdapt Module 1.6 unifies all underlying core subsystems into a production-grade FastAPI web application (`app/main.py`).
+
+```
+                    ┌────────────────────────────────────────┐
+                    │          FastAPI Application           │
+                    │        (app/main.py & lifespan)        │
+                    └───────────────────┬────────────────────┘
+                                        │
+                                        ▼ (Middleware Chain)
+        ┌───────────────────────────────────────────────────────────────┐
+        │ GlobalExceptionHandler -> RequestLogging -> RequestTiming ->  │
+        │ CorrelationID (X-Request-ID, X-Response-Time-MS)              │
+        └───────────────────────────────┬───────────────────────────────┘
+                                        │
+                                        ▼ (Route Handlers via Depends())
+        ┌───────────────────────────────────────────────────────────────┐
+        │  GET /health  │  GET /ready  │  GET /system  │  GET /model   │
+        └───────────────────────────────┬───────────────────────────────┘
+                                        │
+                                        ▼
+                    ┌────────────────────────────────────────┐
+                    │            ServiceContainer            │
+                    │   (Dependency Injection Singleton)     │
+                    └───────────────────┬────────────────────┘
+                                        │
+             ┌──────────────┬───────────┼───────────┬──────────────┐
+             ▼              ▼           ▼           ▼              ▼
+       ConfigManager  LoggerFactory MetricsBus RuntimeManager ModelManager
+        (Module 1.2)   (Module 1.3) (Module 1.3)(Module 1.4)  (Module 1.5)
+```
+
+### Application Lifespan Pipeline
+- **Startup Phase**:
+  1. Load `ConfigManager` configuration parameters.
+  2. Initialize `LoggerFactory` file and console streams.
+  3. Initialize `MetricsBus` event buses and telemetry threads.
+  4. Verify execution environment, hardware device target (`DeviceManager`), and seed assignment (`SeedManager`).
+  5. Load and freeze foundation model parameters via `ModelManager`.
+  6. Publish `app.startup_time_ms` metric and mark container readiness (`container.mark_ready(True)`).
+- **Shutdown Phase**:
+  1. Set readiness state to `False`.
+  2. Unload model weights, force garbage collection, and release CUDA VRAM (`torch.cuda.empty_cache()`).
+  3. Shutdown `MetricsBus` workers and flush log sinks.
+
+### Service Container & Dependency Injection
+- `app/container.py` provides a thread-safe singleton container managing references to `ConfigManager`, `LoggerFactory`, `MetricsBus`, `DeviceManager`, `EnvironmentManager`, `SeedManager`, `RuntimeManager`, and `ModelManager`.
+- `app/dependencies.py` exposes FastAPI dependency providers (`get_container`, `get_config_manager`, `get_metrics_bus`, `get_runtime_manager`, `get_model_manager`) ensuring endpoint handlers never instantiate services directly.
+
+### Middleware Chain
+- **GlobalExceptionHandlerMiddleware**: Traps uncaught errors and returns structured JSON error payloads with request IDs.
+- **RequestLoggingMiddleware**: Logs HTTP method, URL path, status code, client host, and latency via `LoggerFactory`; publishes `http.request_latency_ms` metrics to `MetricsBus`.
+- **RequestTimingMiddleware**: Measures request processing time and injects `X-Response-Time-MS` response headers.
+- **CorrelationIDMiddleware**: Extracts or generates `X-Request-ID` UUID headers for request tracing.
+
+---
+
+## 15. License
 
 This repository is licensed under the [MIT License](LICENSE).
+
 
 
