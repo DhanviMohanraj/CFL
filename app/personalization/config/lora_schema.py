@@ -117,12 +117,12 @@ class ValidationConfiguration(BaseModel):
 
 class PersonalizationConfiguration(BaseModel):
     """The root configuration object aggregating all personalization parameters."""
-    adapter: AdapterConfiguration = Field(default_factory=AdapterConfiguration)
-    lora: LoRAHyperparameters = Field(default_factory=LoRAHyperparameters)
-    target_modules: TargetModuleConfiguration = Field(default_factory=TargetModuleConfiguration)
-    precision: PrecisionConfiguration = Field(default_factory=PrecisionConfiguration)
-    storage: StorageConfiguration = Field(default_factory=StorageConfiguration)
-    training: TrainingConfiguration = Field(default_factory=TrainingConfiguration)
-    checkpoint: CheckpointConfiguration = Field(default_factory=CheckpointConfiguration)
-    logging: LoggingConfiguration = Field(default_factory=LoggingConfiguration)
-    validation: ValidationConfiguration = Field(default_factory=ValidationConfiguration)
+    adapter: AdapterConfiguration = Field(default_factory=lambda: AdapterConfiguration(**{})) # type: ignore
+    lora: LoRAHyperparameters = Field(default_factory=lambda: LoRAHyperparameters(**{})) # type: ignore
+    target_modules: TargetModuleConfiguration = Field(default_factory=lambda: TargetModuleConfiguration(**{})) # type: ignore
+    precision: PrecisionConfiguration = Field(default_factory=lambda: PrecisionConfiguration(**{})) # type: ignore
+    storage: StorageConfiguration = Field(default_factory=lambda: StorageConfiguration(**{})) # type: ignore
+    training: TrainingConfiguration = Field(default_factory=lambda: TrainingConfiguration(**{})) # type: ignore
+    checkpoint: CheckpointConfiguration = Field(default_factory=lambda: CheckpointConfiguration(**{})) # type: ignore
+    logging: LoggingConfiguration = Field(default_factory=lambda: LoggingConfiguration(**{})) # type: ignore
+    validation: ValidationConfiguration = Field(default_factory=lambda: ValidationConfiguration(**{})) # type: ignore
