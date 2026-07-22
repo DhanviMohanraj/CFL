@@ -18,6 +18,7 @@ from app.routes.ready import router as ready_router
 from app.routes.system import router as system_router
 from app.routes.training import router as training_router
 from app.routes.federation import router as federation_router
+from app.routes.aggregation import router as aggregation_router
 
 
 def create_app() -> FastAPI:
@@ -48,6 +49,7 @@ def create_app() -> FastAPI:
     application.include_router(model_router)
     application.include_router(training_router)
     application.include_router(federation_router)
+    application.include_router(aggregation_router)
 
     return application
 

@@ -96,3 +96,18 @@ def get_encryption_service(container: ServiceContainer = Depends(get_container))
 def get_upload_queue(container: ServiceContainer = Depends(get_container)) -> Any:
     """Dependency providing UploadQueue."""
     return container.upload_queue()
+
+
+def get_aggregation_engine(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing AggregationEngine."""
+    return container.aggregation_engine()
+
+
+def get_aggregation_registry(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing AggregationRegistry."""
+    return container.aggregation_registry()
+
+
+def get_aggregation_history(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing AggregationHistory."""
+    return container.aggregation_history()

@@ -120,6 +120,27 @@ class ServiceContainer:
         self._transmission_service: Optional[TransmissionService] = None
         self._upload_queue: Optional[UploadQueue] = None
 
+        # Module 2.6 Aggregation Services
+        from app.services.aggregation.update_validator import UpdateValidator
+        from app.services.aggregation.update_filter import UpdateFilter
+        from app.services.aggregation.conflict_detector import ConflictDetector
+        from app.services.aggregation.adapter_merger import AdapterMerger
+        from app.services.aggregation.version_manager import VersionManager
+        from app.services.aggregation.aggregation_history import AggregationHistory
+        from app.services.aggregation.aggregation_registry import AggregationRegistry
+        from app.services.aggregation.aggregation_metrics import AggregationMetrics
+        from app.services.aggregation.aggregation_engine import AggregationEngine
+        
+        self._update_validator: Optional[UpdateValidator] = None
+        self._update_filter: Optional[UpdateFilter] = None
+        self._conflict_detector: Optional[ConflictDetector] = None
+        self._adapter_merger: Optional[AdapterMerger] = None
+        self._version_manager: Optional[VersionManager] = None
+        self._aggregation_history: Optional[AggregationHistory] = None
+        self._aggregation_registry: Optional[AggregationRegistry] = None
+        self._aggregation_metrics: Optional[AggregationMetrics] = None
+        self._aggregation_engine: Optional[AggregationEngine] = None
+
         self._initialized = True
 
     @property
@@ -344,3 +365,66 @@ class ServiceContainer:
                 transmission_logger=TransmissionLogger()
             )
         return self._transmission_service
+
+    def aggregation_update_validator(self) -> Any:
+        if self._update_validator is None:
+            from app.services.aggregation.update_validator import UpdateValidator
+            self._update_validator = UpdateValidator(checksum_service=self.checksum_service())
+        return self._update_validator
+        
+    def aggregation_update_filter(self) -> Any:
+        if self._update_filter is None:
+            from app.services.aggregation.update_filter import UpdateFilter
+            self._update_filter = UpdateFilter()
+        return self._update_filter
+        
+    def aggregation_conflict_detector(self) -> Any:
+        if self._conflict_detector is None:
+            from app.services.aggregation.conflict_detector import ConflictDetector
+            self._conflict_detector = ConflictDetector()
+        return self._conflict_detector
+        
+    def aggregation_adapter_merger(self) -> Any:
+        if self._adapter_merger is None:
+            from app.services.aggregation.adapter_merger import AdapterMerger
+            self._adapter_merger = AdapterMerger()
+        return self._adapter_merger
+        
+    def aggregation_version_manager(self) -> Any:
+        if self._version_manager is None:
+            from app.services.aggregation.version_manager import VersionManager
+            self._version_manager = VersionManager()
+        return self._version_manager
+        
+    def aggregation_history(self) -> Any:
+        if self._aggregation_history is None:
+            from app.services.aggregation.aggregation_history import AggregationHistory
+            self._aggregation_history = AggregationHistory()
+        return self._aggregation_history
+        
+    def aggregation_registry(self) -> Any:
+        if self._aggregation_registry is None:
+            from app.services.aggregation.aggregation_registry import AggregationRegistry
+            self._aggregation_registry = AggregationRegistry()
+        return self._aggregation_registry
+        
+    def aggregation_metrics(self) -> Any:
+        if self._aggregation_metrics is None:
+            from app.services.aggregation.aggregation_metrics import AggregationMetrics
+            self._aggregation_metrics = AggregationMetrics()
+        return self._aggregation_metrics
+        
+    def aggregation_engine(self) -> Any:
+        if self._aggregation_engine is None:
+            from app.services.aggregation.aggregation_engine import AggregationEngine
+            self._aggregation_engine = AggregationEngine(
+                update_validator=self.aggregation_update_validator(),
+                update_filter=self.aggregation_update_filter(),
+                conflict_detector=self.aggregation_conflict_detector(),
+                adapter_merger=self.aggregation_adapter_merger(),
+                version_manager=self.aggregation_version_manager(),
+                aggregation_history=self.aggregation_history(),
+                aggregation_registry=self.aggregation_registry(),
+                aggregation_metrics=self.aggregation_metrics()
+            )
+        return self._aggregation_engine
