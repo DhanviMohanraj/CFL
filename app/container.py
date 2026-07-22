@@ -141,6 +141,35 @@ class ServiceContainer:
         self._aggregation_metrics: Optional[AggregationMetrics] = None
         self._aggregation_engine: Optional[AggregationEngine] = None
 
+        # Module 2.7 Inference Services
+        from app.services.inference.adapter_loader import AdapterLoader
+        from app.services.inference.adapter_switcher import AdapterSwitcher
+        from app.services.inference.adapter_registry import AdapterRegistry
+        from app.services.inference.cache_manager import CacheManager
+        from app.services.inference.prompt_processor import PromptProcessor
+        from app.services.inference.tokenizer_service import TokenizerService
+        from app.services.inference.generation_service import GenerationService
+        from app.services.inference.streaming_service import StreamingService
+        from app.services.inference.response_formatter import ResponseFormatter
+        from app.services.inference.inference_history_manager import InferenceHistoryManager
+        from app.services.inference.inference_metrics import InferenceMetrics
+        from app.services.inference.inference_validator import InferenceValidator
+        from app.services.inference.inference_engine import InferenceEngine
+        
+        self._inference_adapter_loader: Optional[AdapterLoader] = None
+        self._inference_adapter_switcher: Optional[AdapterSwitcher] = None
+        self._inference_adapter_registry: Optional[AdapterRegistry] = None
+        self._inference_cache_manager: Optional[CacheManager] = None
+        self._inference_prompt_processor: Optional[PromptProcessor] = None
+        self._inference_tokenizer_service: Optional[TokenizerService] = None
+        self._inference_generation_service: Optional[GenerationService] = None
+        self._inference_streaming_service: Optional[StreamingService] = None
+        self._inference_response_formatter: Optional[ResponseFormatter] = None
+        self._inference_history_manager: Optional[InferenceHistoryManager] = None
+        self._inference_metrics: Optional[InferenceMetrics] = None
+        self._inference_validator: Optional[InferenceValidator] = None
+        self._inference_engine: Optional[InferenceEngine] = None
+
         self._initialized = True
 
     @property
@@ -428,3 +457,111 @@ class ServiceContainer:
                 aggregation_metrics=self.aggregation_metrics()
             )
         return self._aggregation_engine
+
+    def inference_adapter_registry(self) -> Any:
+        if self._inference_adapter_registry is None:
+            from app.services.inference.adapter_registry import AdapterRegistry
+            self._inference_adapter_registry = AdapterRegistry()
+        return self._inference_adapter_registry
+        
+    def inference_adapter_loader(self) -> Any:
+        if self._inference_adapter_loader is None:
+            from app.services.inference.adapter_loader import AdapterLoader
+            self._inference_adapter_loader = AdapterLoader(
+                model_manager=self.model_manager(),
+                adapter_registry=self.inference_adapter_registry()
+            )
+        return self._inference_adapter_loader
+        
+    def inference_adapter_switcher(self) -> Any:
+        if self._inference_adapter_switcher is None:
+            from app.services.inference.adapter_switcher import AdapterSwitcher
+            self._inference_adapter_switcher = AdapterSwitcher(
+                model_manager=self.model_manager(),
+                adapter_registry=self.inference_adapter_registry()
+            )
+        return self._inference_adapter_switcher
+        
+    def inference_cache_manager(self) -> Any:
+        if self._inference_cache_manager is None:
+            from app.services.inference.cache_manager import CacheManager
+            self._inference_cache_manager = CacheManager()
+        return self._inference_cache_manager
+        
+    def inference_prompt_processor(self) -> Any:
+        if self._inference_prompt_processor is None:
+            from app.services.inference.prompt_processor import PromptProcessor
+            self._inference_prompt_processor = PromptProcessor()
+        return self._inference_prompt_processor
+        
+    def inference_tokenizer_service(self) -> Any:
+        if self._inference_tokenizer_service is None:
+            from app.services.inference.tokenizer_service import TokenizerService
+            self._inference_tokenizer_service = TokenizerService(
+                model_manager=self.model_manager()
+            )
+        return self._inference_tokenizer_service
+        
+    def inference_generation_service(self) -> Any:
+        if self._inference_generation_service is None:
+            from app.services.inference.generation_service import GenerationService
+            self._inference_generation_service = GenerationService(
+                model_manager=self.model_manager(),
+                tokenizer_service=self.inference_tokenizer_service()
+            )
+        return self._inference_generation_service
+        
+    def inference_streaming_service(self) -> Any:
+        if self._inference_streaming_service is None:
+            from app.services.inference.streaming_service import StreamingService
+            self._inference_streaming_service = StreamingService(
+                model_manager=self.model_manager(),
+                tokenizer_service=self.inference_tokenizer_service()
+            )
+        return self._inference_streaming_service
+        
+    def inference_response_formatter(self) -> Any:
+        if self._inference_response_formatter is None:
+            from app.services.inference.response_formatter import ResponseFormatter
+            self._inference_response_formatter = ResponseFormatter()
+        return self._inference_response_formatter
+        
+    def inference_history_manager(self) -> Any:
+        if self._inference_history_manager is None:
+            from app.services.inference.inference_history_manager import InferenceHistoryManager
+            self._inference_history_manager = InferenceHistoryManager()
+        return self._inference_history_manager
+        
+    def inference_metrics(self) -> Any:
+        if self._inference_metrics is None:
+            from app.services.inference.inference_metrics import InferenceMetrics
+            self._inference_metrics = InferenceMetrics(metrics_bus=self.metrics_bus())
+        return self._inference_metrics
+        
+    def inference_validator(self) -> Any:
+        if self._inference_validator is None:
+            from app.services.inference.inference_validator import InferenceValidator
+            self._inference_validator = InferenceValidator(
+                model_manager=self.model_manager(),
+                adapter_registry=self.inference_adapter_registry()
+            )
+        return self._inference_validator
+        
+    def inference_engine(self) -> Any:
+        if self._inference_engine is None:
+            from app.services.inference.inference_engine import InferenceEngine
+            self._inference_engine = InferenceEngine(
+                adapter_loader=self.inference_adapter_loader(),
+                adapter_switcher=self.inference_adapter_switcher(),
+                adapter_registry=self.inference_adapter_registry(),
+                cache_manager=self.inference_cache_manager(),
+                prompt_processor=self.inference_prompt_processor(),
+                tokenizer_service=self.inference_tokenizer_service(),
+                generation_service=self.inference_generation_service(),
+                streaming_service=self.inference_streaming_service(),
+                response_formatter=self.inference_response_formatter(),
+                history_manager=self.inference_history_manager(),
+                metrics=self.inference_metrics(),
+                validator=self.inference_validator()
+            )
+        return self._inference_engine

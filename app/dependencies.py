@@ -111,3 +111,28 @@ def get_aggregation_registry(container: ServiceContainer = Depends(get_container
 def get_aggregation_history(container: ServiceContainer = Depends(get_container)) -> Any:
     """Dependency providing AggregationHistory."""
     return container.aggregation_history()
+
+
+def get_inference_engine(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing InferenceEngine."""
+    return container.inference_engine()
+
+
+def get_adapter_loader(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing AdapterLoader."""
+    return container.inference_adapter_loader()
+
+
+def get_adapter_registry(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing AdapterRegistry."""
+    return container.inference_adapter_registry()
+
+
+def get_inference_history(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing InferenceHistoryManager."""
+    return container.inference_history_manager()
+
+
+def get_inference_metrics(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing InferenceMetrics."""
+    return container.inference_metrics()

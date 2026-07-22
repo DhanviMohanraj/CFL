@@ -5,7 +5,7 @@ Purpose: Orchestrates the loading of payload bytes into PyTorch state dictionari
 """
 
 import io
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 
 try:
     import torch
