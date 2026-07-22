@@ -111,7 +111,7 @@ class ModelLoader(ModelLoaderInterface):
 
             # Move to device if device_map was not auto-set
             if quant_config is None and not str(target_device).startswith("cuda"):
-                model = model.to(target_device)
+                model = model.to(target_device) # type: ignore
 
             # 6. Strictly freeze all parameters (requires_grad = False, model.eval())
             freeze_all_parameters(model)

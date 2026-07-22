@@ -13,6 +13,17 @@ if TYPE_CHECKING:
     from app.services.lora.adapter_registry import AdapterRegistry
     from app.services.lora.metadata_service import MetadataService
     from app.services.lora.adapter_initializer import AdapterInitializer
+    
+    from app.services.training.optimizer_service import OptimizerService
+    from app.services.training.scheduler_service import SchedulerService
+    from app.services.training.checkpoint_service import CheckpointService
+    from app.services.training.training_monitor import TrainingMonitor
+    from app.services.training.gradient_manager import GradientManager
+    from app.services.training.personalization_service import PersonalizationService
+    from app.services.training.metrics_service import MetricsService as TrainingMetricsService
+    from app.services.training.early_stopping import EarlyStoppingService
+    from app.services.training.resource_monitor import ResourceMonitor
+    from app.services.training.training_engine import TrainingEngine
 
 from app.core.config import ConfigManager
 from app.core.device import DeviceManager
@@ -62,6 +73,29 @@ class ServiceContainer:
         self._lora_registry: Optional[AdapterRegistry] = None
         self._lora_metadata_service: Optional[MetadataService] = None
         self._lora_adapter_initializer: Optional[AdapterInitializer] = None
+        
+        # Module 2.4 Training Services
+        from app.services.training.optimizer_service import OptimizerService
+        from app.services.training.scheduler_service import SchedulerService
+        from app.services.training.checkpoint_service import CheckpointService
+        from app.services.training.training_monitor import TrainingMonitor
+        from app.services.training.gradient_manager import GradientManager
+        from app.services.training.personalization_service import PersonalizationService
+        from app.services.training.metrics_service import MetricsService as TrainingMetricsService
+        from app.services.training.early_stopping import EarlyStoppingService
+        from app.services.training.resource_monitor import ResourceMonitor
+        from app.services.training.training_engine import TrainingEngine
+        
+        self._opt_service: Optional[OptimizerService] = None
+        self._sched_service: Optional[SchedulerService] = None
+        self._checkpoint_service: Optional[CheckpointService] = None
+        self._training_monitor: Optional[TrainingMonitor] = None
+        self._grad_manager: Optional[GradientManager] = None
+        self._pers_service: Optional[PersonalizationService] = None
+        self._training_metrics_service: Optional[TrainingMetricsService] = None
+        self._early_stopping: Optional[EarlyStoppingService] = None
+        self._resource_monitor: Optional[ResourceMonitor] = None
+        self._training_engine: Optional[TrainingEngine] = None
 
         self._initialized = True
 
@@ -137,6 +171,83 @@ class ServiceContainer:
                 registry=self.lora_registry()
             )
         return self._lora_adapter_initializer
+
+    def training_metrics_service(self) -> "TrainingMetricsService":
+        if self._training_metrics_service is None:
+            from app.services.training.metrics_service import MetricsService as TrainingMetricsService
+            self._training_metrics_service = TrainingMetricsService()
+        return self._training_metrics_service
+
+    def training_monitor(self) -> "TrainingMonitor":
+        if self._training_monitor is None:
+            from app.services.training.training_monitor import TrainingMonitor
+            self._training_monitor = TrainingMonitor()
+        return self._training_monitor
+
+    def resource_monitor(self) -> "ResourceMonitor":
+        if self._resource_monitor is None:
+            from app.services.training.resource_monitor import ResourceMonitor
+            self._resource_monitor = ResourceMonitor()
+        return self._resource_monitor
+
+    def early_stopping(self) -> "EarlyStoppingService":
+        if self._early_stopping is None:
+            from app.services.training.early_stopping import EarlyStoppingService
+            self._early_stopping = EarlyStoppingService()
+        return self._early_stopping
+
+    def checkpoint_service(self) -> "CheckpointService":
+        if self._checkpoint_service is None:
+            from app.services.training.checkpoint_service import CheckpointService
+            self._checkpoint_service = CheckpointService()
+        return self._checkpoint_service
+
+    def gradient_manager(self) -> "GradientManager":
+        if self._grad_manager is None:
+            from app.services.training.gradient_manager import GradientManager
+            self._grad_manager = GradientManager()
+        return self._grad_manager
+
+    def optimizer_service(self) -> "OptimizerService":
+        if self._opt_service is None:
+            from app.services.training.optimizer_service import OptimizerService
+            self._opt_service = OptimizerService()
+        return self._opt_service
+
+    def scheduler_service(self) -> "SchedulerService":
+        if self._sched_service is None:
+            from app.services.training.scheduler_service import SchedulerService
+            self._sched_service = SchedulerService()
+        return self._sched_service
+
+    def training_engine(self) -> "TrainingEngine":
+        if self._training_engine is None:
+            from app.services.training.training_engine import TrainingEngine
+            self._training_engine = TrainingEngine(
+                optimizer_service=self.optimizer_service(),
+                scheduler_service=self.scheduler_service(),
+                gradient_manager=self.gradient_manager(),
+                early_stopping=self.early_stopping(),
+                checkpoint_service=self.checkpoint_service(),
+                resource_monitor=self.resource_monitor(),
+                training_monitor=self.training_monitor(),
+                metrics_service=self.training_metrics_service()
+            )
+        return self._training_engine
+
+    def personalization_service(self) -> "PersonalizationService":
+        if self._pers_service is None:
+            from app.services.training.personalization_service import PersonalizationService
+            from app.personalization.peft.peft_manager import PEFTManager
+            self._pers_service = PersonalizationService(
+                model_manager=self.model_manager(),
+                peft_manager=PEFTManager(),
+                registry=self.lora_registry(),
+                training_engine=self.training_engine(),
+                metrics_service=self.training_metrics_service(),
+                training_monitor=self.training_monitor()
+            )
+        return self._pers_service
 
     @staticmethod
     def logger_factory() -> type[LoggerFactory]:

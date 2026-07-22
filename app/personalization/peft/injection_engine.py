@@ -45,8 +45,9 @@ class InjectionEngine:
         start_time = time.perf_counter()
 
         try:
+            import typing
             # The heart of the injection process via Hugging Face PEFT
-            wrapped_model = get_peft_model(base_model, lora_config)
+            wrapped_model = get_peft_model(typing.cast(typing.Any, base_model), lora_config)
             
             # get_peft_model automatically sets requires_grad=False on all non-LoRA parameters, 
             # reinforcing our frozen model invariants.
@@ -54,7 +55,7 @@ class InjectionEngine:
             duration_ms = (time.perf_counter() - start_time) * 1000
             self._logger.info(f"Adapter injection completed successfully in {duration_ms:.2f}ms.")
             
-            return wrapped_model
+            return typing.cast("PeftModel", wrapped_model)
             
         except Exception as e:
             self._logger.error("Failed to inject PEFT adapters into the base model.", error=str(e))

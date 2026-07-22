@@ -16,6 +16,7 @@ from app.routes.health import router as health_router
 from app.routes.model import router as model_router
 from app.routes.ready import router as ready_router
 from app.routes.system import router as system_router
+from app.routes.training import router as training_router
 
 
 def create_app() -> FastAPI:
@@ -44,6 +45,7 @@ def create_app() -> FastAPI:
     application.include_router(ready_router)
     application.include_router(system_router)
     application.include_router(model_router)
+    application.include_router(training_router)
 
     return application
 

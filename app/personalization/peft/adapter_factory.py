@@ -38,12 +38,12 @@ class AdapterFactory:
         try:
             task_type = TaskType[task_type_str]
         except KeyError:
-            task_type = task_type_str
+            task_type = task_type_str # type: ignore
 
         # Construct LoraConfig mapping hyperparameters
         lora_config = LoraConfig(
             r=config.lora.rank,
-            lora_alpha=config.lora.alpha,
+            lora_alpha=int(config.lora.alpha),
             lora_dropout=config.lora.dropout,
             target_modules=config.target_modules.modules,
             bias=config.lora.bias,

@@ -55,7 +55,19 @@ def get_lora_metadata_service(container: ServiceContainer = Depends(get_containe
     """Dependency providing LoRA MetadataService."""
     return container.lora_metadata_service()
 
+def get_personalization_service(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing PersonalizationService."""
+    return container.personalization_service()
 
+
+def get_training_metrics_service(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing TrainingMetricsService."""
+    return container.training_metrics_service()
+
+
+def get_checkpoint_service(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing CheckpointService."""
+    return container.checkpoint_service()
 def get_lora_initializer(container: ServiceContainer = Depends(get_container)) -> Any:
     """Dependency providing LoRA AdapterInitializer."""
     return container.lora_adapter_initializer()
