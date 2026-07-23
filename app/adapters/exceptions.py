@@ -28,3 +28,33 @@ class InvalidClinicID(Exception):
 class RegistryPersistenceError(Exception):
     """Raised when the registry fails to save or load its state."""
     pass
+
+
+class InvalidAdapterState(Exception):
+    """Raised when an adapter state dictionary is invalid."""
+    pass
+
+
+class SerializationError(Exception):
+    """Raised when serializing an adapter state fails."""
+    pass
+
+
+class DeserializationError(Exception):
+    """Raised when deserializing an adapter state fails."""
+    pass
+
+
+class ChecksumMismatch(Exception):
+    """Raised when a computed checksum does not match the expected checksum."""
+    pass
+
+
+class ValidationFailed(Exception):
+    """Raised when an adapter state fails strict validation."""
+    pass
+
+
+class UnsupportedFormat(Exception):
+    """Raised when an unsupported serialization format is requested."""
+    pass
