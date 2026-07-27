@@ -34,6 +34,14 @@ from app.adapters.merge_exceptions import (
     DuplicateAdapterError,
     EmptyMergeInput,
 )
+from app.adapters.metrics_exceptions import (
+    MetricCollectionFailed,
+    MetricValidationFailed,
+    ExportFailed,
+    CommunicationEstimationError,
+    StorageMetricsError,
+    PerformanceMetricsError,
+)
 from app.adapters.registry import AdapterRegistry
 from app.adapters.schemas import AdapterStateMetadata, ValidationReport
 from app.adapters.metrics import AdapterMetricsPublisher
@@ -56,6 +64,16 @@ from app.adapters.merge_validator import MergeValidator
 from app.adapters.merge_strategy import AdapterMergeStrategy
 from app.adapters.averaging import NaiveAverageMerge
 from app.adapters.merge_engine import AdapterMergeEngine
+
+from app.adapters.metrics_schema import AdapterMetrics, CommunicationMetrics, PerformanceMetrics
+from app.adapters.metrics_registry import MetricsRegistry
+from app.adapters.metrics_validator import MetricsValidator
+from app.adapters.storage_metrics import StorageMetricsCalculator
+from app.adapters.performance_metrics import PerformanceMetricsCalculator
+from app.adapters.communication_accounting import CommunicationAccounting
+from app.adapters.metrics_collector import MetricsCollector
+from app.adapters.metrics_exporter import MetricsExporter
+from app.adapters.metrics_engine import AdapterMetricsEngine
 
 __all__ = [
     "AdapterInfo",
@@ -84,6 +102,17 @@ __all__ = [
     "AdapterMergeStrategy",
     "NaiveAverageMerge",
     "AdapterMergeEngine",
+    "AdapterMetrics",
+    "CommunicationMetrics",
+    "PerformanceMetrics",
+    "MetricsRegistry",
+    "MetricsValidator",
+    "StorageMetricsCalculator",
+    "PerformanceMetricsCalculator",
+    "CommunicationAccounting",
+    "MetricsCollector",
+    "MetricsExporter",
+    "AdapterMetricsEngine",
     "AdapterAlreadyExists",
     "AdapterNotFound",
     "ClinicNotFound",
@@ -108,4 +137,10 @@ __all__ = [
     "TensorShapeMismatch",
     "DuplicateAdapterError",
     "EmptyMergeInput",
+    "MetricCollectionFailed",
+    "MetricValidationFailed",
+    "ExportFailed",
+    "CommunicationEstimationError",
+    "StorageMetricsError",
+    "PerformanceMetricsError",
 ]
