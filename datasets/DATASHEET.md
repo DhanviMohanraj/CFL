@@ -15,7 +15,7 @@
 - **Discard Rate**: 0.0% unmapped items discarded.
 
 ## 3. Structure & Simulation
-- **Clinics**: 8 simulated CHW clinics assigned to 4 regional epidemiological profiles.
+- **Clinics**: 4 simulated CHW clinics assigned to 4 regional epidemiological profiles.
 - **Time Horizon**: 12 monthly steps.
 - **Items per Shard**: ≥200 items per (clinic, month) pair.
 - **Drift Injections**: Deterministic linguistic drift (local disease terms, code-mixing, clinical abbreviations) and step-change protocol drift.

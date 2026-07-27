@@ -1,6 +1,6 @@
 """
 Clinic Instantiation Sampler.
-Simulates N (default 8) distinct Community Health Worker (CHW) clinics across 12 months.
+Simulates N (default 4) distinct Community Health Worker (CHW) clinics across 12 months.
 Assigns region profiles, manages seasonal sampling, and applies drift profiles.
 """
 
@@ -13,14 +13,34 @@ from app.datasets.drift_injector import DriftInjector
 logger = logging.getLogger(__name__)
 
 DEFAULT_CLINIC_PROFILES = [
-    {"clinic_id": "clinic_00", "name": "CHW Subcenter - Rural North (Delta)", "region_id": "region_north_monsoon", "drift_start_month": 4, "max_drift_intensity": 0.8},
-    {"clinic_id": "clinic_01", "name": "CHW Subcenter - Coastal South", "region_id": "region_south_coastal", "drift_start_month": 6, "max_drift_intensity": 0.7},
-    {"clinic_id": "clinic_02", "name": "CHW Subcenter - Western Desert", "region_id": "region_western_arid", "drift_start_month": 3, "max_drift_intensity": 0.9},
-    {"clinic_id": "clinic_03", "name": "CHW Subcenter - Eastern Forest", "region_id": "region_eastern_hilly", "drift_start_month": 5, "max_drift_intensity": 0.85},
-    {"clinic_id": "clinic_04", "name": "CHW Subcenter - North Peri-Urban", "region_id": "region_north_monsoon", "drift_start_month": 7, "max_drift_intensity": 0.6},
-    {"clinic_id": "clinic_05", "name": "CHW Subcenter - South Inland", "region_id": "region_south_coastal", "drift_start_month": 5, "max_drift_intensity": 0.75},
-    {"clinic_id": "clinic_06", "name": "CHW Subcenter - Western Rural", "region_id": "region_western_arid", "drift_start_month": 8, "max_drift_intensity": 0.5},
-    {"clinic_id": "clinic_07", "name": "CHW Subcenter - Eastern Hill Tribe", "region_id": "region_eastern_hilly", "drift_start_month": 4, "max_drift_intensity": 0.95},
+    {
+        "clinic_id": "clinic_00",
+        "name": "Clinic 1 - Tropical Lowlands",
+        "region_id": "region_tropical_lowlands",
+        "drift_start_month": 7,
+        "max_drift_intensity": 0.8
+    },
+    {
+        "clinic_id": "clinic_01",
+        "name": "Clinic 2 - Northern High Altitude",
+        "region_id": "region_high_altitude",
+        "drift_start_month": 11,
+        "max_drift_intensity": 0.8
+    },
+    {
+        "clinic_id": "clinic_02",
+        "name": "Clinic 3 - Urban Slum / Flood-Prone",
+        "region_id": "region_urban_slum",
+        "drift_start_month": 5,
+        "max_drift_intensity": 0.8
+    },
+    {
+        "clinic_id": "clinic_03",
+        "name": "Clinic 4 - Primary Health Center (Control Baseline)",
+        "region_id": "region_phc_baseline",
+        "drift_start_month": 6,
+        "max_drift_intensity": 0.3
+    },
 ]
 
 class ClinicSampler:

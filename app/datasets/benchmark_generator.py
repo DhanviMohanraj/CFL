@@ -36,6 +36,14 @@ def generate_drift_health_benchmark(
     output_dir = os.path.abspath(output_dir)
     os.makedirs(output_dir, exist_ok=True)
 
+    # Clean up stale clinic directories from previous runs if present
+    import shutil
+    for entry in os.listdir(output_dir):
+        if entry.startswith("clinic_"):
+            item_path = os.path.join(output_dir, entry)
+            if os.path.isdir(item_path):
+                shutil.rmtree(item_path, ignore_errors=True)
+
     logger.info("Step 1/6: Loading raw medical corpora...")
     corpora = load_all_corpora(force_offline=force_offline)
     all_raw_items = []
@@ -143,7 +151,7 @@ def write_datasheet(path: str, ontology_metrics: Dict[str, Any]):
 - **Discard Rate**: {ontology_metrics.get('discard_rate_percent', 0)}% unmapped items discarded.
 
 ## 3. Structure & Simulation
-- **Clinics**: 8 simulated CHW clinics assigned to 4 regional epidemiological profiles.
+- **Clinics**: 4 simulated CHW clinics assigned to 4 regional epidemiological profiles.
 - **Time Horizon**: 12 monthly steps.
 - **Items per Shard**: \u2265200 items per (clinic, month) pair.
 - **Drift Injections**: Deterministic linguistic drift (local disease terms, code-mixing, clinical abbreviations) and step-change protocol drift.

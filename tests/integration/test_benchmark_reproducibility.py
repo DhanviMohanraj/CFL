@@ -1,13 +1,11 @@
-"""
-Integration & Reproducibility Test Suite for DriftHealth Benchmark Generator.
-Validates 100% byte-identical benchmark regeneration and SHA-256 manifest verification.
-"""
-
 import os
+import sys
 import json
 import shutil
 import tempfile
 import unittest
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 
 from app.datasets.benchmark_generator import generate_drift_health_benchmark, compute_sha256
 
