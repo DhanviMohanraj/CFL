@@ -58,3 +58,38 @@ class ValidationFailed(Exception):
 class UnsupportedFormat(Exception):
     """Raised when an unsupported serialization format is requested."""
     pass
+
+
+class VersionAlreadyExists(Exception):
+    """Raised when an adapter version with the same ID already exists."""
+    pass
+
+
+class VersionNotFound(Exception):
+    """Raised when an adapter version cannot be found."""
+    pass
+
+
+class RollbackFailed(Exception):
+    """Raised when a version rollback fails."""
+    pass
+
+
+class InvalidVersion(Exception):
+    """Raised when version metadata is invalid."""
+    pass
+
+
+class ChecksumValidationFailed(Exception):
+    """Raised when a version's checksum does not match its payload."""
+    pass
+
+
+class PolicyViolation(Exception):
+    """Raised when a version action violates a configured policy."""
+    pass
+
+
+class InvalidStateTransition(Exception):
+    """Raised when a version attempts an illegal lifecycle transition."""
+    pass
