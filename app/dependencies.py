@@ -5,6 +5,7 @@ Purpose: Provides FastAPI dependency provider functions for injecting ServiceCon
 Future Integration: Used by all FastAPI route handlers across the platform.
 """
 
+from typing import Any
 from fastapi import Depends
 
 from app.container import ServiceContainer
@@ -43,3 +44,130 @@ def get_runtime_manager(container: ServiceContainer = Depends(get_container)) ->
 def get_model_manager(container: ServiceContainer = Depends(get_container)) -> ModelManager:
     """Dependency providing ModelManager instance."""
     return container.model_manager()
+
+
+def get_lora_registry(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing LoRA AdapterRegistry."""
+    return container.lora_registry()
+
+
+def get_lora_metadata_service(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing LoRA MetadataService."""
+    return container.lora_metadata_service()
+
+def get_personalization_service(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing PersonalizationService."""
+    return container.personalization_service()
+
+
+def get_training_metrics_service(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing TrainingMetricsService."""
+    return container.training_metrics_service()
+
+
+def get_checkpoint_service(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing CheckpointService."""
+    return container.checkpoint_service()
+def get_lora_initializer(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing LoRA AdapterInitializer."""
+    return container.lora_adapter_initializer()
+
+
+def get_update_packager(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing UpdatePackager."""
+    return container.update_packager()
+
+
+def get_checksum_service(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing ChecksumService."""
+    return container.checksum_service()
+
+
+def get_compression_service(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing CompressionService."""
+    return container.compression_service()
+
+
+def get_encryption_service(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing EncryptionService."""
+    return container.encryption_service()
+
+
+def get_upload_queue(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing UploadQueue."""
+    return container.upload_queue()
+
+
+def get_aggregation_engine(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing AggregationEngine."""
+    return container.aggregation_engine()
+
+
+def get_aggregation_registry(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing AggregationRegistry."""
+    return container.aggregation_registry()
+
+
+def get_aggregation_history(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing AggregationHistory."""
+    return container.aggregation_history()
+
+
+def get_inference_engine(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing InferenceEngine."""
+    return container.inference_engine()
+
+
+def get_adapter_loader(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing AdapterLoader."""
+    return container.inference_adapter_loader()
+
+
+def get_adapter_registry(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing AdapterRegistry."""
+    return container.inference_adapter_registry()
+
+
+def get_inference_history(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing InferenceHistoryManager."""
+    return container.inference_history_manager()
+
+
+def get_inference_metrics(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing InferenceMetrics."""
+    return container.inference_metrics()
+
+
+def get_validation_engine(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing ValidationEngine."""
+    return container.val_validation_engine()
+
+
+def get_benchmark_engine(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing BenchmarkEngine."""
+    return container.val_benchmark_engine()
+
+
+def get_system_health_monitor(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing SystemHealthMonitor."""
+    return container.val_system_health_monitor()
+
+
+def get_validation_history(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing ValidationHistory."""
+    return container.val_history()
+
+
+def get_validation_report_gen(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing ValidationReportGenerator."""
+    return container.val_report_generator()
+
+
+def get_benchmark_report_gen(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing BenchmarkReportGenerator."""
+    return container.val_benchmark_report_generator()
+
+
+def get_model_integrity_checker(container: ServiceContainer = Depends(get_container)) -> Any:
+    """Dependency providing ModelIntegrityChecker."""
+    return container.val_model_integrity_checker()

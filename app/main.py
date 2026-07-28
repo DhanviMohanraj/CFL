@@ -16,6 +16,11 @@ from app.routes.health import router as health_router
 from app.routes.model import router as model_router
 from app.routes.ready import router as ready_router
 from app.routes.system import router as system_router
+from app.routes.training import router as training_router
+from app.routes.federation import router as federation_router
+from app.routes.aggregation import router as aggregation_router
+from app.routes.inference import router as inference_router
+from app.routes.validation import router as validation_router
 
 
 def create_app() -> FastAPI:
@@ -44,6 +49,11 @@ def create_app() -> FastAPI:
     application.include_router(ready_router)
     application.include_router(system_router)
     application.include_router(model_router)
+    application.include_router(training_router)
+    application.include_router(federation_router)
+    application.include_router(aggregation_router)
+    application.include_router(inference_router)
+    application.include_router(validation_router)
 
     return application
 

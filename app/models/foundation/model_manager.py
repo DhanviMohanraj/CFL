@@ -145,6 +145,19 @@ class ModelManager(ModelManagerInterface):
         self.unload_model()
         return self.load_model()
 
+    def is_loaded(self) -> bool:
+        """
+        Returns True if the foundation model is currently loaded in memory.
+
+        This method is used by downstream modules such as the
+        Inference Engine and Validation Engine to determine whether
+        the foundation model has already been initialized.
+
+        Returns:
+            bool: True if a model is loaded, False otherwise.
+        """
+        return self._model is not None
+
     def get_model(self) -> Any:
         """Returns the loaded PyTorch model instance."""
         if self._model is None:

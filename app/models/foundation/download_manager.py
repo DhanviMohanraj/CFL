@@ -91,7 +91,6 @@ class DownloadManager:
                 repo_id=model_name,
                 revision=revision,
                 cache_dir=str(self._cache_manager.cache_dir),
-                resume_download=resume_download,
                 force_download=force_download,
                 local_files_only=offline,
             )
