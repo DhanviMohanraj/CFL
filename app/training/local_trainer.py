@@ -96,7 +96,7 @@ class LocalLoRATrainer:
                 fp16=self.config.get("fp16", True),
                 bf16=self.config.get("bf16", False),
                 logging_steps=10,
-                evaluation_strategy="epoch",
+                eval_strategy="epoch",
                 save_strategy="epoch",
                 load_best_model_at_end=True
             )
