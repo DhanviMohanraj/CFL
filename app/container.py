@@ -349,7 +349,6 @@ class ServiceContainer:
                 model_manager=self.model_manager(),
                 peft_manager=PEFTManager(),
                 registry=self.lora_registry(),
-                training_engine=self.training_engine(),
                 metrics_service=self.training_metrics_service(),
                 training_monitor=self.training_monitor()
             )
