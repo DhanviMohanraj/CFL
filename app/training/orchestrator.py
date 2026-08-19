@@ -3,7 +3,7 @@
 Author: DriftAdapt Contributors
 """
 
-from typing import List
+from typing import List, Any
 
 from app.core.metrics.metrics_bus import MetricsBus
 from app.training.training_configuration import TrainingConfiguration
