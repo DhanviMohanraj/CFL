@@ -24,6 +24,12 @@ from app.training.experiment_metrics import ExperimentMetrics
 from app.training.checkpoint_orchestrator import CheckpointOrchestrator
 from app.training.resource_allocator import ResourceAllocator
 from app.training.experiment_exceptions import ExperimentError
+from app.training.local_trainer import LocalLoRATrainer
+from app.training.flower_client import FlowerClient
+from app.services.aggregation.flower_strategy import DriftAdaptStrategy
+from app.services.aggregation.conflict_detector import ConflictDetector
+
+import flwr as fl
 
 
 class FederatedTrainingOrchestrator:
@@ -85,37 +91,59 @@ class FederatedTrainingOrchestrator:
             self._metrics.publish_event("experiment.failed", tags={"reason": str(e)})
             raise ExperimentError(f"Experiment failed: {e}") from e
             
-    def run_month(self, available_clinics: List[str]) -> None:
-        """Runs a complete month of training."""
+    def run_month(self, available_clinics: List[str]) -> Any:
+        """Runs a complete month of training using Flower Simulation and returns the history."""
         selected_clinics = self._clinic_scheduler.select_clinics(available_clinics)
         month = self._experiment_scheduler.current_month
+        
+        self._logger = self._metrics_bus # Assuming we have a logger, using metrics bus for event
         
         for clinic in selected_clinics:
             self._dataset_dispatcher.dispatch(clinic, month)
             
-        # Reset round scheduler for the month
-        self._round_scheduler = RoundScheduler(self._config.communication_rounds)
-        
-        while not self._round_scheduler.is_complete():
-            self.run_round()
-            self._round_scheduler.next_round()
-            self._progress.record_round_completion()
-            self._metrics.publish_event("training.round.completed")
+        # Define Flower Client Factory
+        def client_fn(cid: str) -> fl.client.Client:
+            clinic_id = selected_clinics[int(cid) % len(selected_clinics)]
+            trainer = LocalLoRATrainer(
+                trainer_id=f"trainer_{clinic_id}_{month}",
+                clinic_id=clinic_id,
+                month=month,
+                config=self._config.to_dict() if hasattr(self._config, 'to_dict') else {},
+                metrics_bus=self._metrics_bus
+            )
+            return FlowerClient(trainer).to_client()
             
-            if self._config.aggregation_after_each_round:
-                self._aggregation_dispatcher.dispatch_aggregation(f"month_{month}_round_{self._round_scheduler.current_round}")
-                self._metrics.publish_event("aggregation.triggered")
-                
+        strategy = DriftAdaptStrategy(
+            conflict_detector=ConflictDetector(),
+            fraction_fit=1.0,
+            fraction_evaluate=1.0,
+            min_fit_clients=len(selected_clinics),
+            min_evaluate_clients=len(selected_clinics),
+            min_available_clients=len(selected_clinics)
+        )
+        
+        self._metrics.publish_event(f"flower.simulation.starting", tags={"month": month, "rounds": self._config.communication_rounds})
+        
+        # Start Flower simulation for the month
+        history = fl.simulation.start_simulation(
+            client_fn=client_fn,
+            num_clients=len(selected_clinics),
+            config=fl.server.ServerConfig(num_rounds=self._config.communication_rounds),
+            strategy=strategy,
+            client_resources={"num_cpus": 1, "num_gpus": 1 if self._config.max_parallel_clients > 0 else 0}
+        )
+        
+        self._metrics.publish_event("flower.simulation.completed", tags={"history_loss": str(history.losses_distributed)})
+        
         if month % self._config.evaluation_interval == 0:
             self._evaluation_dispatcher.dispatch_monthly_evaluation(month)
             self._metrics.publish_event("evaluation.triggered")
             
+        return history
+            
     def run_round(self) -> None:
-        """Mocks the execution of a single federated communication round."""
-        self._state_machine.transition_to(ExperimentState.TRAINING)
-        self._state_machine.transition_to(ExperimentState.COMMUNICATING)
-        self._state_machine.transition_to(ExperimentState.AGGREGATING)
-        self._state_machine.transition_to(ExperimentState.PREPARING)
+        """Deprecated: Replaced by Flower Server orchestration."""
+        pass
         
     def pause(self) -> None:
         self._lifecycle.pause()

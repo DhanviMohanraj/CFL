@@ -98,27 +98,19 @@ class ServiceContainer:
         self._training_engine: Optional[TrainingEngine] = None
         
         # Module 2.5 Federation Services
-        from app.services.federation.update_extractor import UpdateExtractor
         from app.services.federation.compression_service import CompressionService
         from app.services.federation.encryption_service import EncryptionService
         from app.services.federation.checksum_service import ChecksumService
-        from app.services.federation.update_packager import UpdatePackager
         from app.services.federation.bandwidth_optimizer import BandwidthOptimizer
         from app.services.federation.retry_manager import RetryManager
         from app.services.federation.transmission_logger import TransmissionLogger
-        from app.services.federation.transmission_service import TransmissionService
-        from app.services.federation.upload_queue import UploadQueue
 
-        self._update_extractor: Optional[UpdateExtractor] = None
         self._compression_service: Optional[CompressionService] = None
         self._encryption_service: Optional[EncryptionService] = None
         self._checksum_service: Optional[ChecksumService] = None
-        self._update_packager: Optional[UpdatePackager] = None
         self._bandwidth_optimizer: Optional[BandwidthOptimizer] = None
         self._retry_manager: Optional[RetryManager] = None
         self._transmission_logger: Optional[TransmissionLogger] = None
-        self._transmission_service: Optional[TransmissionService] = None
-        self._upload_queue: Optional[UploadQueue] = None
 
         # Module 2.6 Aggregation Services
         from app.services.aggregation.update_validator import UpdateValidator
@@ -382,16 +374,6 @@ class ServiceContainer:
             "seed_manager": "HEALTHY",
         }
 
-    def update_packager(self) -> Any:
-        if self._update_packager is None:
-            from app.services.federation.update_packager import UpdatePackager
-            self._update_packager = UpdatePackager(
-                compression_service=self.compression_service(),
-                encryption_service=self.encryption_service(),
-                checksum_service=self.checksum_service()
-            )
-        return self._update_packager
-
     def checksum_service(self) -> Any:
         if self._checksum_service is None:
             from app.services.federation.checksum_service import ChecksumService
@@ -409,23 +391,6 @@ class ServiceContainer:
             from app.services.federation.encryption_service import EncryptionService
             self._encryption_service = EncryptionService(symmetric_key=b"12345678901234567890123456789012")
         return self._encryption_service
-
-    def upload_queue(self) -> Any:
-        if self._upload_queue is None:
-            from app.services.federation.upload_queue import UploadQueue
-            self._upload_queue = UploadQueue(transmission_service=self.transmission_service())
-        return self._upload_queue
-        
-    def transmission_service(self) -> Any:
-        if self._transmission_service is None:
-            from app.services.federation.transmission_service import TransmissionService
-            from app.services.federation.retry_manager import RetryManager
-            from app.services.federation.transmission_logger import TransmissionLogger
-            self._transmission_service = TransmissionService(
-                retry_manager=RetryManager(),
-                transmission_logger=TransmissionLogger()
-            )
-        return self._transmission_service
 
     def aggregation_update_validator(self) -> Any:
         if self._update_validator is None:

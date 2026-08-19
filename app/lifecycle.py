@@ -72,7 +72,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         logger.info(f"DriftAdapt Backend is READY! Total startup duration: {startup_duration_ms:.2f}ms.")
 
     except Exception as e:
-        logger.critical(f"DriftAdapt Application Lifespan STARTUP failed: {e}", exc_info=True)
+        logger.critical("DriftAdapt Application Lifespan STARTUP failed: {}", str(e), exc_info=True)
         container.mark_ready(False)
         raise e
 

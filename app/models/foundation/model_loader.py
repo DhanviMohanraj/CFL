@@ -66,6 +66,14 @@ class ModelLoader(ModelLoaderInterface):
         else:
             target_device = torch.device(device) if isinstance(device, str) else device
 
+        if str(target_device).startswith("cpu") and quantization in ("4bit", "8bit", "nf4"):
+            logger.warning(f"Quantization '{quantization}' requested but device is CPU. Falling back to 'none'.")
+            quantization = "none"
+
+        if str(target_device).startswith("cpu") and quantization in ("4bit", "8bit", "nf4"):
+            logger.warning(f"Quantization '{quantization}' requested but device is CPU. Falling back to 'none'.")
+            quantization = "none"
+
         logger.info(
             f"Loading foundation model '{model_name_or_path}' on device '{target_device}' "
             f"(quantization='{quantization or 'none'}', precision='{precision or 'float32'}')."

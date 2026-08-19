@@ -73,16 +73,6 @@ def get_lora_initializer(container: ServiceContainer = Depends(get_container)) -
     return container.lora_adapter_initializer()
 
 
-def get_update_packager(container: ServiceContainer = Depends(get_container)) -> Any:
-    """Dependency providing UpdatePackager."""
-    return container.update_packager()
-
-
-def get_checksum_service(container: ServiceContainer = Depends(get_container)) -> Any:
-    """Dependency providing ChecksumService."""
-    return container.checksum_service()
-
-
 def get_compression_service(container: ServiceContainer = Depends(get_container)) -> Any:
     """Dependency providing CompressionService."""
     return container.compression_service()
@@ -91,11 +81,6 @@ def get_compression_service(container: ServiceContainer = Depends(get_container)
 def get_encryption_service(container: ServiceContainer = Depends(get_container)) -> Any:
     """Dependency providing EncryptionService."""
     return container.encryption_service()
-
-
-def get_upload_queue(container: ServiceContainer = Depends(get_container)) -> Any:
-    """Dependency providing UploadQueue."""
-    return container.upload_queue()
 
 
 def get_aggregation_engine(container: ServiceContainer = Depends(get_container)) -> Any:
